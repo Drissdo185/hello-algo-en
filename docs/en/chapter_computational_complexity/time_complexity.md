@@ -2,17 +2,17 @@
 comments: true
 ---
 
-# 时间复杂度
+# Time Complexity
 
-## 统计算法运行时间
+## Evaluating Algorithm Run Time
 
-运行时间能够直观且准确地体现出算法的效率水平。如果我们想要 **准确预估一段代码的运行时间** ，该如何做呢？
+The efficiency of an algorithm can be evaluated rigorously by its run time. If we want to **accurately estimate the run time of a piece of code**, what will we do?
 
-1. 首先需要 **确定运行平台** ，包括硬件配置、编程语言、系统环境等，这些都会影响到代码的运行效率。
-2. 评估 **各种计算操作的所需运行时间** ，例如加法操作 `+` 需要 1 ns ，乘法操作 `*` 需要 10 ns ，打印操作需要 5 ns 等。
-3. 根据代码 **统计所有计算操作的数量** ，并将所有操作的执行时间求和，即可得到运行时间。
+1. First, we need to **determine the running platform**, including hardware configuration, programming language, system environment, etc., which will affect the running efficiency of the code.
+2. Next, we need to evaluate **the time required for each operation**, for example the addition operation `+` requires 1 ns, the multiplication operation `*` requires 10 ns, and the print operation requires 5 ns, etc.
+3. Finally, we need to **count the number of operations** in the code, and add up the execution time of all operations, which will give us the run time of the code.
 
-例如以下代码，输入数据大小为 $n$ ，根据以上方法，可以得到算法运行时间为 $6n + 12$ ns 。
+For example, the piece of code below, the input size is $n$, according to the above method, we can get the run time of the algorithm as $6n + 12$ ns.
 
 $$
 1 + 1 + 10 + (1 + 5) \times n = 6n + 12
@@ -21,13 +21,13 @@ $$
 === "Java"
 
     ```java title=""
-    // 在某运行平台下
+    // under a certain running platform
     void algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
-        // 循环 n 次
-        for (int i = 0; i < n; i++) {  // 1 ns ，每轮都要执行 i++
+        // loop n times
+        for (int i = 0; i < n; i++) {  // 1 ns , do i++ every loop
             System.out.println(0);     // 5 ns
         }
     }
@@ -36,13 +36,13 @@ $$
 === "C++"
 
     ```cpp title=""
-    // 在某运行平台下
+    // under a certain running platform
     void algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
-        // 循环 n 次
-        for (int i = 0; i < n; i++) {  // 1 ns ，每轮都要执行 i++
+        // loop n times
+        for (int i = 0; i < n; i++) {  // 1 ns , do i++ every loop
             cout << 0 << endl;         // 5 ns
         }
     }
@@ -51,12 +51,12 @@ $$
 === "Python"
 
     ```python title=""
-    # 在某运行平台下
+    # under a certain running platform
     def algorithm(n):
         a = 2      # 1 ns
         a = a + 1  # 1 ns
         a = a * 2  # 10 ns
-        # 循环 n 次
+        # loop n times
         for _ in range(n):  # 1 ns
             print(0)        # 5 ns
     ```
@@ -64,12 +64,12 @@ $$
 === "Go"
 
     ```go title=""
-    // 在某运行平台下
+    // under a certain running platform
     func algorithm(n int) {
         a := 2      // 1 ns
         a = a + 1   // 1 ns
         a = a * 2   // 10 ns
-        // 循环 n 次
+        // loop n times
         for i := 0; i < n; i++ {    // 1 ns
             fmt.Println(a)          // 5 ns
         }
@@ -79,13 +79,13 @@ $$
 === "JavaScript"
 
     ```js title=""
-    // 在某运行平台下
+    // under a certain running platform
     function algorithm(n) {
         var a = 2; // 1 ns
         a = a + 1; // 1 ns
         a = a * 2; // 10 ns
-        // 循环 n 次
-        for(let i = 0; i < n; i++) { // 1 ns ，每轮都要执行 i++
+        // loop n times
+        for(let i = 0; i < n; i++) { // 1 ns , do i++ every loop
             console.log(0); // 5 ns
         }
     }
@@ -94,13 +94,13 @@ $$
 === "TypeScript"
 
     ```typescript title=""
-    // 在某运行平台下
+    // under a certain running platform
     function algorithm(n: number): void {
         var a: number = 2; // 1 ns
         a = a + 1; // 1 ns
         a = a * 2; // 10 ns
-        // 循环 n 次
-        for(let i = 0; i < n; i++) { // 1 ns ，每轮都要执行 i++
+        // loop n times
+        for(let i = 0; i < n; i++) { // 1 ns , do i++ every loop
             console.log(0); // 5 ns
         }
     }
@@ -109,13 +109,13 @@ $$
 === "C"
 
     ```c title=""
-    // 在某运行平台下
+    // under a certain running platform
     void algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
-        // 循环 n 次
-        for (int i = 0; i < n; i++) {   // 1 ns ，每轮都要执行 i++
+        // loop n times
+        for (int i = 0; i < n; i++) {   // 1 ns , do i++ every loop
             printf("%d", 0);            // 5 ns
         }
     }
@@ -124,15 +124,15 @@ $$
 === "C#"
 
     ```csharp title=""
-    // 在某运行平台下
+    // under a certain running platform
     void algorithm(int n)
     {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
-        // 循环 n 次
+        // loop n times
         for (int i = 0; i < n; i++)
-        {  // 1 ns ，每轮都要执行 i++
+        {  // 1 ns ，do i++ every loop
             Console.WriteLine(0);     // 5 ns
         }
     }
@@ -141,44 +141,44 @@ $$
 === "Swift"
 
     ```swift title=""
-    // 在某运行平台下
+    // under a certain running platform
     func algorithm(_ n: Int) {
         var a = 2 // 1 ns
         a = a + 1 // 1 ns
         a = a * 2 // 10 ns
-        // 循环 n 次
+        // loop n times
         for _ in 0 ..< n { // 1 ns
             print(0) // 5 ns
         }
     }
     ```
 
-但实际上， **统计算法的运行时间既不合理也不现实**。首先，我们不希望预估时间和运行平台绑定，毕竟算法需要跑在各式各样的平台之上。其次，我们很难获知每一种操作的运行时间，这为预估过程带来了极大的难度。
+But in fact, **calculating the run time of statistical algorithms is neither reasonable nor practical**. First of all, we don't want our run time estimates to be bound to a particular platform, since algorithms need to run on all kinds of platforms. Secondly, it is difficult for us to know the running time of each operation, which brings great challenges to the estimation process.
 
-## 统计时间增长趋势
+## Evaluating the Growth Trend of Run Time
 
-「时间复杂度分析」采取了不同的做法，其统计的不是算法运行时间，而是 **算法运行时间随着数据量变大时的增长趋势** 。
+*Time Complexity Analysis* takes a different approach. It does not calculate the running time of the algorithm, but **the growth trend of the running time as the data size increases**.
 
-“时间增长趋势”这个概念比较抽象，我们借助一个例子来理解。设输入数据大小为 $n$ ，给定三个算法 `A` , `B` , `C` 。
+The concept of “growth trend” is a bit abstract, so let's use an example to understand it. Suppose the input data size is $n$, and three algorithms `A`, `B`, `C` are given.
 
-- 算法 `A` 只有 $1$ 个打印操作，算法运行时间不随着 $n$ 增大而增长。我们称此算法的时间复杂度为「常数阶」。
-- 算法 `B` 中的打印操作需要循环 $n$ 次，算法运行时间随着 $n$ 增大成线性增长。此算法的时间复杂度被称为「线性阶」。
-- 算法 `C` 中的打印操作需要循环 $1000000$ 次，但运行时间仍与输入数据大小 $n$ 无关。因此 `C` 的时间复杂度和 `A` 相同，仍为「常数阶」。
+- Algorithm `A` only has $1$ print operation, and the running time of the algorithm does not increase with the increase of $n$. We denote the time complexity of this algorithm *constant order*.
+- Algorithm `B` has $n$ print operations, and the running time of the algorithm increases linearly with the increase of $n$. We denote the time complexity of this algorithm *linear order*.
+- Algorithm `C` has $1000000$ print operations, but the running time of this algorithm is not related to the size of $n$. Thus the time complexity of `C` is the same as `A`, still is *constant order*.
 
 === "Java"
 
     ```java title=""
-    // 算法 A 时间复杂度：常数阶
+    // time complexity of algorithm A: constant order
     void algorithm_A(int n) {
         System.out.println(0);
     }
-    // 算法 B 时间复杂度：线性阶
+    // time complexity of algorithm B: linear order
     void algorithm_B(int n) {
         for (int i = 0; i < n; i++) {
             System.out.println(0);
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // time complexity of algorithm C: constant order
     void algorithm_C(int n) {
         for (int i = 0; i < 1000000; i++) {
             System.out.println(0);
@@ -189,17 +189,17 @@ $$
 === "C++"
 
     ```cpp title=""
-    // 算法 A 时间复杂度：常数阶
+    // time complexity of algorithm A: constant order
     void algorithm_A(int n) {
         cout << 0 << endl;
     }
-    // 算法 B 时间复杂度：线性阶
+    // time complexity of algorithm B: linear order
     void algorithm_B(int n) {
         for (int i = 0; i < n; i++) {
             cout << 0 << endl;
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // time complexity of algorithm C: constant order
     void algorithm_C(int n) {
         for (int i = 0; i < 1000000; i++) {
             cout << 0 << endl;
@@ -210,14 +210,14 @@ $$
 === "Python"
 
     ```python title=""
-    # 算法 A 时间复杂度：常数阶
+    # time complexity of algorithm A: constant order
     def algorithm_A(n):
         print(0)
-    # 算法 B 时间复杂度：线性阶
+    # time complexity of algorithm B: linear order
     def algorithm_B(n):
         for _ in range(n):
             print(0)
-    # 算法 C 时间复杂度：常数阶
+    # time complexity of algorithm C: constant order
     def algorithm_C(n):
         for _ in range(1000000):
             print(0)
@@ -226,17 +226,17 @@ $$
 === "Go"
 
     ```go title=""
-    // 算法 A 时间复杂度：常数阶
+    // time complexity of algorithm A: constant order
     func algorithm_A(n int) {
         fmt.Println(0)
     }
-    // 算法 B 时间复杂度：线性阶
+    // time complexity of algorithm B: linear order
     func algorithm_B(n int) {
         for i := 0; i < n; i++ {
             fmt.Println(0)
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // time complexity of algorithm C: constant order
     func algorithm_C(n int) {
         for i := 0; i < 1000000; i++ {
             fmt.Println(0)
@@ -247,17 +247,17 @@ $$
 === "JavaScript"
 
     ```js title=""
-    // 算法 A 时间复杂度：常数阶
+    // time complexity of algorithm A: constant order
     function algorithm_A(n) {
         console.log(0);
     }
-    // 算法 B 时间复杂度：线性阶
+    // time complexity of algorithm B: linear order
     function algorithm_B(n) {
         for (let i = 0; i < n; i++) {
             console.log(0);
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // time complexity of algorithm C: constant order
     function algorithm_C(n) {
         for (let i = 0; i < 1000000; i++) {
             console.log(0);
@@ -269,17 +269,17 @@ $$
 === "TypeScript"
 
     ```typescript title=""
-    // 算法 A 时间复杂度：常数阶
+    // time complexity of algorithm A: constant order
     function algorithm_A(n: number): void {
         console.log(0);
     }
-    // 算法 B 时间复杂度：线性阶
+    // time complexity of algorithm B: linear order
     function algorithm_B(n: number): void {
         for (let i = 0; i < n; i++) {
             console.log(0);
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // time complexity of algorithm C: constant order
     function algorithm_C(n: number): void {
         for (let i = 0; i < 1000000; i++) {
             console.log(0);
@@ -290,17 +290,17 @@ $$
 === "C"
 
     ```c title=""
-    // 算法 A 时间复杂度：常数阶
+    // time complexity of algorithm A: constant order
     void algorithm_A(int n) {
         printf("%d", 0);
     }
-    // 算法 B 时间复杂度：线性阶
+    // time complexity of algorithm B: linear order
     void algorithm_B(int n) {
         for (int i = 0; i < n; i++) {
             printf("%d", 0);
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // time complexity of algorithm C: constant order
     void algorithm_C(int n) {
         for (int i = 0; i < 1000000; i++) {
             printf("%d", 0);
@@ -311,12 +311,12 @@ $$
 === "C#"
 
     ```csharp title=""
-    // 算法 A 时间复杂度：常数阶
+    // time complexity of algorithm A: constant order
     void algorithm_A(int n)
     {
         Console.WriteLine(0);
     }
-    // 算法 B 时间复杂度：线性阶
+    // time complexity of algorithm B: linear order
     void algorithm_B(int n)
     {
         for (int i = 0; i < n; i++)
@@ -324,7 +324,7 @@ $$
             Console.WriteLine(0);
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // time complexity of algorithm C: constant order
     void algorithm_C(int n)
     {
         for (int i = 0; i < 1000000; i++)
@@ -337,19 +337,17 @@ $$
 === "Swift"
 
     ```swift title=""
-    // 算法 A 时间复杂度：常数阶
+    // time complexity of algorithm A: constant order
     func algorithmA(_ n: Int) {
         print(0)
     }
-
-    // 算法 B 时间复杂度：线性阶
+    // time complexity of algorithm B: linear order
     func algorithmB(_ n: Int) {
         for _ in 0 ..< n {
             print(0)
         }
     }
-
-    // 算法 C 时间复杂度：常数阶
+    // time complexity of algorithm C: constant order
     func algorithmC(_ n: Int) {
         for _ in 0 ..< 1000000 {
             print(0)
