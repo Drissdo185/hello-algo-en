@@ -5,11 +5,11 @@
 </p>
 
 <h3 align="center">
-  《 Hello 算法 》
+  Hello Algorithm
 </h3>
 
 <p align="center"> 
-  动画图解、能运行、可提问的</br>数据结构与算法快速入门教程
+  Animated, runnable, and interactive crash</br>course for data structures and algorithms.
 </p>
 
 </br>
@@ -21,43 +21,43 @@
 
 <p align="center">
     <a href="https://www.hello-algo.com/">
-    阅读网页版
+    Read Online
     </a>
   &nbsp; | &nbsp;
     <a href="https://github.com/krahets/hello-algo/releases">
-    下载 PDF 版
+    Download PDF
     </a>
 </p>
 
-## 关于本书
+## About
 
-本项目旨在打造一本开源免费、新手友好的数据结构与算法入门教程。
+This project aims to create a free, open-source, and beginner-friendly crash course for data structures and algorithms.
 
-- 全书采用动画图解，内容清晰易懂、学习曲线平滑，引导初学者探索数据结构与算法的“知识地图”；
-- 源代码可一键运行，帮助读者在实践练习中提升编程技能，了解算法工作原理和数据结构底层实现；
-- 鼓励读者互助学习，提问与评论通常可在两日内得到回复；
+- Animated illustrations, easy-to-understand contents, and a smooth learning curve help beginners explore the "knowledge map" of data structures and algorithms;
+- Run code with just one click, help readers improve their programming skills and understand the working principle of algorithms and the underlying implementation of data structures;
+- We encourage readers to help each other. Questions and comments are usually answered within two days;
 
-若本书对您有所帮助，请点个 Star :star: 支持一下，谢谢！
+If you find this book helpful, please give it a Star :star: to support us, thank you!
 
-## 推荐语
+## Recommendations
 
-> “一本通俗易懂的数据结构与算法入门书，引导读者手脑并用地学习，强烈推荐算法初学者阅读。”
+> "An easy-to-understand introductory book on data structures and algorithms, which guides readers to learn by thinking and practicing, strongly recommended for algorithm beginners."
 >
-> **—— 邓俊辉，清华大学计算机系教授**
+> **—— Junhui Deng, Professor of Computer Science, Tsinghua University**
 
-> “如果我当年学数据结构与算法的时候有《Hello 算法》，学起来应该会简单 10 倍！”
+> "If I had Hello Algorithm when I was learning data structures and algorithms, it would have been 10 times easier!"
 >
-> **—— 李沐，亚马逊资深首席科学家**
+> **—— Mu Li, Senior Principal Scientist, Amazon**
 
-## 参与写作
+## Contribute
 
-我们正在加速更新本书，欢迎您通过提交 Pull Request 来[参与本项目](https://www.hello-algo.com/chapter_appendix/contribution/)，以帮助其他读者获取更优质的学习内容。
+We are accelerating the update of this book. You are welcome to [participate in this project](https://www.hello-algo.com/chapter_appendix/contribution/) by submitting a Pull Request to help other readers get better learning content.
 
-- 若您发现语法错误、内容缺失、文字歧义、无效链接、解释不清晰等问题，请协助修正或在评论区指出；
-- 期待您参与 C++, Python, Go, JavaScript, TypeScript, C, C#, Swift, Zig, Rust, Dart 等语言的[代码翻译](https://github.com/krahets/hello-algo/issues/15)；
-- 欢迎您为本书内容提出宝贵意见和建议，如有任何问题请提交 Issues 或微信联系 krahets-jyd ；
+- If you find any errors in the text (grammar, spelling, failed links, etc.), please help us fix them or let us know in the comments;
+- We would love to invite you to contribute in [code translation](https://github.com/krahets/hello-algo/issues/15) for C++, Python, Go, JavaScript, TypeScript, C, C#, Swift, Zig, Rust, Dart, etc.;
+- We appreciate your valuable comments and inputs to this book. If you have any questions, please submit an Issue or contact via WeChat: krahets-jyd;
 
-感谢本开源书的每一位撰稿人，是他们的无私奉献让这本书变得更好，他们是：
+We would like to dedicate our thanks to all the contributors of this book:
 
 <p align="left">
     <a href="https://github.com/krahets/hello-algo/graphs/contributors">
