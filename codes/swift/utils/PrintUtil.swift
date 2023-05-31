@@ -68,4 +68,26 @@ public enum PrintUtil {
         showTrunks(p: p?.prev)
         print(p!.str, terminator: "")
     }
+
+    public static func printHashMap<K, V>(map: [K: V]) {
+        for (key, value) in map {
+            print("\(key) -> \(value)")
+        }
+    }
+
+    public static func printHeap(queue: [Int]) {
+        print("堆的数组表示：", terminator: "")
+        print(queue)
+        print("堆的树状表示：")
+        let root = TreeNode.listToTree(list: queue)
+        printTree(root: root)
+    }
+
+    public static func printMatrix<T>(matrix: [[T]]) {
+        print("[")
+        for row in matrix {
+            print("  \(row),")
+        }
+        print("]")
+    }
 }

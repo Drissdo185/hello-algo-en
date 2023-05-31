@@ -47,9 +47,11 @@ func (q *quickSort) quickSort(nums []int, left, right int) {
 
 /* 选取三个元素的中位数 */
 func (q *quickSortMedian) medianThree(nums []int, left, mid, right int) int {
-	if (nums[left] > nums[mid]) != (nums[left] > nums[right]) {
+	// 此处使用异或运算来简化代码（!= 在这里起到异或的作用）
+	// 异或规则为 0 ^ 0 = 1 ^ 1 = 0, 0 ^ 1 = 1 ^ 0 = 1
+	if (nums[left] < nums[mid]) != (nums[left] < nums[right]) {
 		return left
-	} else if (nums[mid] < nums[left]) != (nums[mid] > nums[right]) {
+	} else if (nums[mid] < nums[left]) != (nums[mid] < nums[right]) {
 		return mid
 	}
 	return right
@@ -119,10 +121,10 @@ func (q *quickSortTailCall) quickSort(nums []int, left, right int) {
 		// 对两个子数组中较短的那个执行快排
 		if pivot-left < right-pivot {
 			q.quickSort(nums, left, pivot-1) // 递归排序左子数组
-			left = pivot + 1                 // 剩余待排序区间为 [pivot + 1, right]
+			left = pivot + 1                 // 剩余未排序区间为 [pivot + 1, right]
 		} else {
 			q.quickSort(nums, pivot+1, right) // 递归排序右子数组
-			right = pivot - 1                 // 剩余待排序区间为 [left, pivot - 1]
+			right = pivot - 1                 // 剩余未排序区间为 [left, pivot - 1]
 		}
 	}
 }

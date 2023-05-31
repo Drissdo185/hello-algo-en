@@ -5,7 +5,6 @@
 package chapter_computational_complexity
 
 import (
-	"fmt"
 	"math/rand"
 )
 
@@ -26,20 +25,11 @@ func randomNumbers(n int) []int {
 /* 查找数组 nums 中数字 1 所在索引 */
 func findOne(nums []int) int {
 	for i := 0; i < len(nums); i++ {
+		// 当元素 1 在数组头部时，达到最佳时间复杂度 O(1)
+		// 当元素 1 在数组尾部时，达到最差时间复杂度 O(n)
 		if nums[i] == 1 {
 			return i
 		}
 	}
 	return -1
-}
-
-/* Driver Code */
-func main() {
-	for i := 0; i < 10; i++ {
-		n := 100
-		nums := randomNumbers(n)
-		index := findOne(nums)
-		fmt.Println("\n数组 [ 1, 2, ..., n ] 被打乱后 =", nums)
-		fmt.Println("数字 1 的索引为", index)
-	}
 }

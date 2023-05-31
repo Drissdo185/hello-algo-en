@@ -53,24 +53,26 @@ fn quadratic(n: i32) i32 {
 // 平方阶（冒泡排序）
 fn bubbleSort(nums: []i32) i32 {
     var count: i32 = 0;  // 计数器 
-    // 外循环：待排序元素数量为 n-1, n-2, ..., 1
+    // 外循环：未排序区间为 [0, i]
     var i: i32 = @intCast(i32, nums.len ) - 1;
     while (i > 0) : (i -= 1) {
         var j: usize = 0;
-        // 内循环：冒泡操作
+        // 内循环：将未排序区间 [0, i] 中的最大元素交换至该区间的最右端 
         while (j < i) : (j += 1) {
-            // 交换 nums[j] 与 nums[j + 1]
-            var tmp = nums[j];
-            nums[j] = nums[j + 1];
-            nums[j + 1] = tmp;
-            count += 3;  // 元素交换包含 3 个单元操作
+            if (nums[j] > nums[j + 1]) {
+                // 交换 nums[j] 与 nums[j + 1]
+                var tmp = nums[j];
+                nums[j] = nums[j + 1];
+                nums[j + 1] = tmp;
+                count += 3;  // 元素交换包含 3 个单元操作
+            }
         }
     }
     return count;
 }
 
 // 指数阶（循环实现）
-fn exponential(n: i32) i32{
+fn exponential(n: i32) i32 {
     var count: i32 = 0;
     var bas: i32 = 1;
     var i: i32 = 0;
@@ -87,14 +89,13 @@ fn exponential(n: i32) i32{
 }
 
 // 指数阶（递归实现）
-fn expRecur(n: i32) i32{
+fn expRecur(n: i32) i32 {
     if (n == 1) return 1;
     return expRecur(n - 1) + expRecur(n - 1) + 1;
 }
 
 // 对数阶（循环实现）
-fn logarithmic(n: f32) i32
-{
+fn logarithmic(n: f32) i32 {
     var count: i32 = 0;
     var n_var = n;
     while (n_var > 1)
@@ -106,15 +107,13 @@ fn logarithmic(n: f32) i32
 }
 
 // 对数阶（递归实现）
-fn logRecur(n: f32) i32
-{
+fn logRecur(n: f32) i32 {
     if (n <= 1) return 0;
     return logRecur(n / 2) + 1;
 }
 
 // 线性对数阶
-fn linearLogRecur(n: f32) i32
-{
+fn linearLogRecur(n: f32) i32 {
     if (n <= 1) return 1;
     var count: i32 = linearLogRecur(n / 2) +
                 linearLogRecur(n / 2);
@@ -138,7 +137,7 @@ fn factorialRecur(n: i32) i32 {
 }
 
 // Driver Code
-pub fn main() void {
+pub fn main() !void {
     // 可以修改 n 运行，体会一下各种复杂度的操作数量变化趋势
     const n: i32 = 8;
     std.debug.print("输入数据大小 n = {}\n", .{n});

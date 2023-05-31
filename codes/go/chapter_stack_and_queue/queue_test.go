@@ -31,9 +31,9 @@ func TestQueue(t *testing.T) {
 	fmt.Println("队首元素 peek =", peek.Value)
 
 	/* 元素出队 */
-	poll := queue.Front()
-	queue.Remove(poll)
-	fmt.Print("出队元素 poll = ", poll.Value, "，出队后 queue = ")
+	pop := queue.Front()
+	queue.Remove(pop)
+	fmt.Print("出队元素 pop = ", pop.Value, "，出队后 queue = ")
 	PrintList(queue)
 
 	/* 获取队列的长度 */
@@ -51,11 +51,11 @@ func TestArrayQueue(t *testing.T) {
 	queue := newArrayQueue(capacity)
 
 	// 元素入队
-	queue.offer(1)
-	queue.offer(3)
-	queue.offer(2)
-	queue.offer(5)
-	queue.offer(4)
+	queue.push(1)
+	queue.push(3)
+	queue.push(2)
+	queue.push(5)
+	queue.push(4)
 	fmt.Print("队列 queue = ")
 	PrintSlice(queue.toSlice())
 
@@ -64,8 +64,8 @@ func TestArrayQueue(t *testing.T) {
 	fmt.Println("队首元素 peek =", peek)
 
 	// 元素出队
-	poll := queue.poll()
-	fmt.Print("出队元素 poll = ", poll, ", 出队后 queue = ")
+	pop := queue.pop()
+	fmt.Print("出队元素 pop = ", pop, ", 出队后 queue = ")
 	PrintSlice(queue.toSlice())
 
 	// 获取队的长度
@@ -75,6 +75,14 @@ func TestArrayQueue(t *testing.T) {
 	// 判断是否为空
 	isEmpty := queue.isEmpty()
 	fmt.Println("队是否为空 =", isEmpty)
+
+	/* 测试环形数组 */
+	for i := 0; i < 10; i++ {
+		queue.push(i)
+		queue.pop()
+		fmt.Print("第", i, "轮入队 + 出队后 queue =")
+		PrintSlice(queue.toSlice())
+	}
 }
 
 func TestLinkedListQueue(t *testing.T) {
@@ -82,11 +90,11 @@ func TestLinkedListQueue(t *testing.T) {
 	queue := newLinkedListQueue()
 
 	// 元素入队
-	queue.offer(1)
-	queue.offer(3)
-	queue.offer(2)
-	queue.offer(5)
-	queue.offer(4)
+	queue.push(1)
+	queue.push(3)
+	queue.push(2)
+	queue.push(5)
+	queue.push(4)
 	fmt.Print("队列 queue = ")
 	PrintList(queue.toList())
 
@@ -95,8 +103,8 @@ func TestLinkedListQueue(t *testing.T) {
 	fmt.Println("队首元素 peek =", peek)
 
 	// 元素出队
-	poll := queue.poll()
-	fmt.Print("出队元素 poll = ", poll, ", 出队后 queue = ")
+	pop := queue.pop()
+	fmt.Print("出队元素 pop = ", pop, ", 出队后 queue = ")
 	PrintList(queue.toList())
 
 	// 获取队的长度
@@ -111,24 +119,24 @@ func TestLinkedListQueue(t *testing.T) {
 // BenchmarkArrayQueue 8 ns/op in Mac M1 Pro
 func BenchmarkArrayQueue(b *testing.B) {
 	capacity := 1000
-	stack := newArrayQueue(capacity)
+	queue := newArrayQueue(capacity)
 	// use b.N for looping
 	for i := 0; i < b.N; i++ {
-		stack.offer(777)
+		queue.push(777)
 	}
 	for i := 0; i < b.N; i++ {
-		stack.poll()
+		queue.pop()
 	}
 }
 
 // BenchmarkLinkedQueue 62.66 ns/op in Mac M1 Pro
 func BenchmarkLinkedQueue(b *testing.B) {
-	stack := newLinkedListQueue()
+	queue := newLinkedListQueue()
 	// use b.N for looping
 	for i := 0; i < b.N; i++ {
-		stack.offer(777)
+		queue.push(777)
 	}
 	for i := 0; i < b.N; i++ {
-		stack.poll()
+		queue.pop()
 	}
 }

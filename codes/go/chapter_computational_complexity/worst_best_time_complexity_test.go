@@ -1,4 +1,4 @@
-// File: worst_best_time_complexity.go
+// File: worst_best_time_complexity_test.go
 // Created Time: 2022-12-13
 // Author: msk397 (machangxinq@gmail.com), cathay (cathaycchen@gmail.com)
 
@@ -14,7 +14,7 @@ func TestWorstBestTimeComplexity(t *testing.T) {
 		n := 100
 		nums := randomNumbers(n)
 		index := findOne(nums)
-		fmt.Println("打乱后的数组为", nums)
+		fmt.Println("\n数组 [ 1, 2, ..., n ] 被打乱后 =", nums)
 		fmt.Println("数字 1 的索引为", index)
 	}
 }

@@ -4,56 +4,63 @@
  * Author: Krahets (krahets@163.com)
  */
 
-#include "../include/include.hpp"
+#include "../utils/common.hpp"
 
 /* 基于环形数组实现的队列 */
 class ArrayQueue {
-private:
-    int *nums;      // 用于存储队列元素的数组
-    int cap;        // 队列容量
-    int front = 0;  // 头指针，指向队首
-    int rear = 0;   // 尾指针，指向队尾 + 1
+  private:
+    int *nums;       // 用于存储队列元素的数组
+    int front;       // 队首指针，指向队首元素
+    int queSize;     // 队列长度
+    int queCapacity; // 队列容量
 
-public:
+  public:
     ArrayQueue(int capacity) {
         // 初始化数组
-        cap = capacity;
         nums = new int[capacity];
+        queCapacity = capacity;
+        front = queSize = 0;
+    }
+
+    ~ArrayQueue() {
+        delete[] nums;
     }
 
     /* 获取队列的容量 */
     int capacity() {
-        return cap;
+        return queCapacity;
     }
 
     /* 获取队列的长度 */
     int size() {
-        // 由于将数组看作为环形，可能 rear < front ，因此需要取余数
-        return (capacity() + rear - front) % capacity();
+        return queSize;
     }
 
     /* 判断队列是否为空 */
     bool empty() {
-        return rear - front == 0;
+        return size() == 0;
     }
 
     /* 入队 */
-    void offer(int num) {
-        if (size() == capacity()) {
+    void push(int num) {
+        if (queSize == queCapacity) {
             cout << "队列已满" << endl;
             return;
         }
-        // 尾结点后添加 num
+        // 计算队尾指针，指向队尾索引 + 1
+        // 通过取余操作，实现 rear 越过数组尾部后回到头部
+        int rear = (front + queSize) % queCapacity;
+        // 将 num 添加至队尾
         nums[rear] = num;
-        // 尾指针向后移动一位，越过尾部后返回到数组头部
-        rear = (rear + 1) % capacity();
+        queSize++;
     }
 
     /* 出队 */
-    void poll() {
+    void pop() {
         int num = peek();
-        // 队头指针向后移动一位，若越过尾部则返回到数组头部
-        front = (front + 1) % capacity();
+        // 队首指针向后移动一位，若越过尾部则返回到数组头部
+        front = (front + 1) % queCapacity;
+        queSize--;
     }
 
     /* 访问队首元素 */
@@ -65,41 +72,38 @@ public:
 
     /* 将数组转化为 Vector 并返回 */
     vector<int> toVector() {
-        int siz = size();
-        int cap = capacity();
         // 仅转换有效长度范围内的列表元素
-        vector<int> arr(siz);
-        for (int i = 0, j = front; i < siz; i++, j++) {
-            arr[i] = nums[j % cap];
+        vector<int> arr(queSize);
+        for (int i = 0, j = front; i < queSize; i++, j++) {
+            arr[i] = nums[j % queCapacity];
         }
         return arr;
     }
 };
 
-
 /* Driver Code */
 int main() {
     /* 初始化队列 */
     int capacity = 10;
-    ArrayQueue* queue = new ArrayQueue(capacity);
+    ArrayQueue *queue = new ArrayQueue(capacity);
 
     /* 元素入队 */
-    queue->offer(1);
-    queue->offer(3);
-    queue->offer(2);
-    queue->offer(5);
-    queue->offer(4);
+    queue->push(1);
+    queue->push(3);
+    queue->push(2);
+    queue->push(5);
+    queue->push(4);
     cout << "队列 queue = ";
-    PrintUtil::printVector(queue->toVector());
+    printVector(queue->toVector());
 
     /* 访问队首元素 */
     int peek = queue->peek();
     cout << "队首元素 peek = " << peek << endl;
-    
+
     /* 元素出队 */
-    queue->poll();
-    cout << "出队元素 poll = " << peek << "，出队后 queue = ";
-    PrintUtil::printVector(queue->toVector());
+    queue->pop();
+    cout << "出队元素 pop = " << peek << "，出队后 queue = ";
+    printVector(queue->toVector());
 
     /* 获取队列的长度 */
     int size = queue->size();
@@ -111,11 +115,14 @@ int main() {
 
     /* 测试环形数组 */
     for (int i = 0; i < 10; i++) {
-        queue->offer(i);
-        queue->poll();
+        queue->push(i);
+        queue->pop();
         cout << "第 " << i << " 轮入队 + 出队后 queue = ";
-        PrintUtil::printVector(queue->toVector());
+        printVector(queue->toVector());
     }
+
+    // 释放内存
+    delete queue;
 
     return 0;
 }

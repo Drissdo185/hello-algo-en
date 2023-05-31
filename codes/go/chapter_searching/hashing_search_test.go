@@ -1,4 +1,4 @@
-// File: binary_search.go
+// File: hashing_search_test.go
 // Created Time: 2022-12-12
 // Author: Slone123c (274325721@qq.com)
 
@@ -20,7 +20,7 @@ func TestHashingSearch(t *testing.T) {
 	for i := 0; i < len(nums); i++ {
 		m[nums[i]] = i
 	}
-	index := hashingSearch(m, target)
+	index := hashingSearchArray(m, target)
 	fmt.Println("目标元素 3 的索引 = ", index)
 
 	/* 哈希查找（链表） */
@@ -31,6 +31,6 @@ func TestHashingSearch(t *testing.T) {
 		m1[head.Val] = head
 		head = head.Next
 	}
-	node := hashingSearch1(m1, target)
-	fmt.Println("目标结点值 3 的对应结点对象为 ", node)
+	node := hashingSearchLinkedList(m1, target)
+	fmt.Println("目标节点值 3 的对应节点对象为 ", node)
 }

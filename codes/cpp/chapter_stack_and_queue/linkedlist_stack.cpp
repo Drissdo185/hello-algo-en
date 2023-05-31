@@ -4,18 +4,23 @@
  * Author: qualifier1024 (2539244001@qq.com)
  */
 
-#include "../include/include.hpp"
+#include "../utils/common.hpp"
 
 /* 基于链表实现的栈 */
 class LinkedListStack {
-private:
-    ListNode* stackTop; // 将头结点作为栈顶
-    int stkSize;      // 栈的长度
+  private:
+    ListNode *stackTop; // 将头节点作为栈顶
+    int stkSize;        // 栈的长度
 
-public:
+  public:
     LinkedListStack() {
         stackTop = nullptr;
         stkSize = 0;
+    }
+
+    ~LinkedListStack() {
+        // 遍历链表删除节点，释放内存
+        freeMemoryLinkedList(stackTop);
     }
 
     /* 获取栈的长度 */
@@ -30,7 +35,7 @@ public:
 
     /* 入栈 */
     void push(int num) {
-        ListNode* node = new ListNode(num);
+        ListNode *node = new ListNode(num);
         node->next = stackTop;
         stackTop = node;
         stkSize++;
@@ -55,7 +60,7 @@ public:
 
     /* 将 List 转化为 Array 并返回 */
     vector<int> toVector() {
-        ListNode* node = stackTop;
+        ListNode *node = stackTop;
         vector<int> res(size());
         for (int i = res.size() - 1; i >= 0; i--) {
             res[i] = node->val;
@@ -65,11 +70,10 @@ public:
     }
 };
 
-
 /* Driver Code */
 int main() {
     /* 初始化栈 */
-    LinkedListStack* stack = new LinkedListStack();
+    LinkedListStack *stack = new LinkedListStack();
 
     /* 元素入栈 */
     stack->push(1);
@@ -78,7 +82,7 @@ int main() {
     stack->push(5);
     stack->push(4);
     cout << "栈 stack = ";
-    PrintUtil::printVector(stack->toVector());
+    printVector(stack->toVector());
 
     /* 访问栈顶元素 */
     int top = stack->top();
@@ -87,7 +91,7 @@ int main() {
     /* 元素出栈 */
     stack->pop();
     cout << "出栈元素 pop = " << top << "，出栈后 stack = ";
-    PrintUtil::printVector(stack->toVector());
+    printVector(stack->toVector());
 
     /* 获取栈的长度 */
     int size = stack->size();
@@ -96,6 +100,9 @@ int main() {
     /* 判断是否为空 */
     bool empty = stack->empty();
     cout << "栈是否为空 = " << empty << endl;
+
+    // 释放内存
+    delete stack;
 
     return 0;
 }

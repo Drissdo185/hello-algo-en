@@ -9,10 +9,10 @@ import (
 )
 
 type TreeNode struct {
-	Val    int       // 结点值
-	Height int       // 结点高度
-	Left   *TreeNode // 左子结点引用
-	Right  *TreeNode // 右子结点引用
+	Val    int       // 节点值
+	Height int       // 节点高度
+	Left   *TreeNode // 左子节点引用
+	Right  *TreeNode // 右子节点引用
 }
 
 func NewTreeNode(v int) *TreeNode {
@@ -36,7 +36,7 @@ func ArrToTree(arr []any) *TreeNode {
 	queue.PushBack(root)
 	i := 0
 	for queue.Len() > 0 {
-		// poll
+		// 队首元素出队
 		node := queue.Remove(queue.Front()).(*TreeNode)
 		i++
 		if i < len(arr) {

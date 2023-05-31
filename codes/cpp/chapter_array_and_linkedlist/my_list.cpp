@@ -4,20 +4,25 @@
  * Author: Krahets (krahets@163.com)
  */
 
-#include "../include/include.hpp"
+#include "../utils/common.hpp"
 
 /* 列表类简易实现 */
 class MyList {
-private:
-    int* nums;                // 数组（存储列表元素）
-    int numsCapacity = 10;    // 列表容量
-    int numsSize = 0;         // 列表长度（即当前元素数量）
-    int extendRatio = 2;      // 每次列表扩容的倍数
+  private:
+    int *nums;             // 数组（存储列表元素）
+    int numsCapacity = 10; // 列表容量
+    int numsSize = 0;      // 列表长度（即当前元素数量）
+    int extendRatio = 2;   // 每次列表扩容的倍数
 
-public:
-    /* 构造函数 */
+  public:
+    /* 构造方法 */
     MyList() {
         nums = new int[numsCapacity];
+    }
+
+    /* 析构方法 */
+    ~MyList() {
+        delete[] nums;
     }
 
     /* 获取列表长度（即当前元素数量）*/
@@ -33,14 +38,14 @@ public:
     /* 访问元素 */
     int get(int index) {
         // 索引如果越界则抛出异常，下同
-        if (index >= size())
+        if (index < 0 || index >= size())
             throw out_of_range("索引越界");
         return nums[index];
     }
 
     /* 更新元素 */
     void set(int index, int num) {
-        if (index >= size())
+        if (index < 0 || index >= size())
             throw out_of_range("索引越界");
         nums[index] = num;
     }
@@ -57,7 +62,7 @@ public:
 
     /* 中间插入元素 */
     void insert(int index, int num) {
-        if (index >= size())
+        if (index < 0 || index >= size())
             throw out_of_range("索引越界");
         // 元素数量超出容量时，触发扩容机制
         if (size() == capacity())
@@ -73,7 +78,7 @@ public:
 
     /* 删除元素 */
     int remove(int index) {
-        if (index >= size())
+        if (index < 0 || index >= size())
             throw out_of_range("索引越界");
         int num = nums[index];
         // 索引 i 之后的元素都向前移动一位
@@ -90,14 +95,14 @@ public:
     void extendCapacity() {
         // 新建一个长度为 size * extendRatio 的数组，并将原数组拷贝到新数组
         int newCapacity = capacity() * extendRatio;
-        int* extend = new int[newCapacity];
+        int *tmp = nums;
+        nums = new int[newCapacity];
         // 将原数组中的所有元素复制到新数组
         for (int i = 0; i < size(); i++) {
-            extend[i] = nums[i];
+            nums[i] = tmp[i];
         }
-        int* temp = nums;
-        nums = extend;
-        delete[] temp;
+        // 释放内存
+        delete[] tmp;
         numsCapacity = newCapacity;
     }
 
@@ -112,7 +117,6 @@ public:
     }
 };
 
-
 /* Driver Code */
 int main() {
     /* 初始化列表 */
@@ -125,20 +129,20 @@ int main() {
     list->add(4);
     cout << "列表 list = ";
     vector<int> vec = list->toVector();
-    PrintUtil::printVector(vec);
+    printVector(vec);
     cout << "容量 = " << list->capacity() << " ，长度 = " << list->size() << endl;
 
     /* 中间插入元素 */
     list->insert(3, 6);
     cout << "在索引 3 处插入数字 6 ，得到 list = ";
     vec = list->toVector();
-    PrintUtil::printVector(vec);
+    printVector(vec);
 
     /* 删除元素 */
     list->remove(3);
     cout << "删除索引 3 处的元素，得到 list = ";
     vec = list->toVector();
-    PrintUtil::printVector(vec);
+    printVector(vec);
 
     /* 访问元素 */
     int num = list->get(1);
@@ -148,7 +152,7 @@ int main() {
     list->set(1, 0);
     cout << "将索引 1 处的元素更新为 0 ，得到 list = ";
     vec = list->toVector();
-    PrintUtil::printVector(vec);
+    printVector(vec);
 
     /* 测试扩容机制 */
     for (int i = 0; i < 10; i++) {
@@ -157,8 +161,11 @@ int main() {
     }
     cout << "扩容后的列表 list = ";
     vec = list->toVector();
-    PrintUtil::printVector(vec);
+    printVector(vec);
     cout << "容量 = " << list->capacity() << " ，长度 = " << list->size() << endl;
+
+    // 释放内存
+    delete list;
 
     return 0;
 }

@@ -1,0 +1,3 @@
+add_executable(time_complexity time_complexity.c)
+add_executable(worst_best_time_complexity worst_best_time_complexity.c)
+add_executable(space_complexity space_complexity.c)

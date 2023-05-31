@@ -4,7 +4,7 @@
  * Author: Krahets (krahets@163.com)
  */
 
-#include "../include/include.hpp"
+#include "../utils/common.hpp"
 
 /* 函数 */
 int func() {
@@ -18,7 +18,7 @@ void constant(int n) {
     const int a = 0;
     int b = 0;
     vector<int> nums(10000);
-    ListNode* node = new ListNode(0);
+    ListNode node(0);
     // 循环中的变量占用 O(1) 空间
     for (int i = 0; i < n; i++) {
         int c = 0;
@@ -34,9 +34,9 @@ void linear(int n) {
     // 长度为 n 的数组占用 O(n) 空间
     vector<int> nums(n);
     // 长度为 n 的列表占用 O(n) 空间
-    vector<ListNode*> nodes;
+    vector<ListNode> nodes;
     for (int i = 0; i < n; i++) {
-        nodes.push_back(new ListNode(i));
+        nodes.push_back(ListNode(i));
     }
     // 长度为 n 的哈希表占用 O(n) 空间
     unordered_map<int, string> map;
@@ -48,7 +48,8 @@ void linear(int n) {
 /* 线性阶（递归实现） */
 void linearRecur(int n) {
     cout << "递归 n = " << n << endl;
-    if (n == 1) return;
+    if (n == 1)
+        return;
     linearRecur(n - 1);
 }
 
@@ -67,21 +68,22 @@ void quadratic(int n) {
 
 /* 平方阶（递归实现） */
 int quadraticRecur(int n) {
-    if (n <= 0) return 0;
+    if (n <= 0)
+        return 0;
     vector<int> nums(n);
     cout << "递归 n = " << n << " 中的 nums 长度 = " << nums.size() << endl;
     return quadraticRecur(n - 1);
 }
 
 /* 指数阶（建立满二叉树） */
-TreeNode* buildTree(int n) {
-    if (n == 0) return nullptr;
-    TreeNode* root = new TreeNode(0);
+TreeNode *buildTree(int n) {
+    if (n == 0)
+        return nullptr;
+    TreeNode *root = new TreeNode(0);
     root->left = buildTree(n - 1);
     root->right = buildTree(n - 1);
     return root;
 }
-
 
 /* Driver Code */
 int main() {
@@ -95,8 +97,11 @@ int main() {
     quadratic(n);
     quadraticRecur(n);
     // 指数阶
-    TreeNode* root = buildTree(n);
-    PrintUtil::printTree(root);
+    TreeNode *root = buildTree(n);
+    printTree(root);
+
+    // 释放内存
+    freeMemoryTree(root);
 
     return 0;
 }
