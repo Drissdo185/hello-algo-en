@@ -1,45 +1,43 @@
 <p align="center">
   <a href="https://www.hello-algo.com/">
-    <img src="https://www.hello-algo.com/index.assets/conceptual_rendering.png" width="230">
+    <img src="https://www.hello-algo.com/index.assets/conceptual_rendering.png" width="200">
   </a>
 </p>
 
 <h3 align="center">
-  《 Hello，算法 》
+  《 Hello 算法 》
 </h3>
 
 <p align="center"> 
-  动画图解、能运行、可讨论的</br>数据结构与算法快速入门教程
+  动画图解、能运行、可提问的</br>数据结构与算法快速入门教程
 </p>
 
 </br>
 
 <p align="center">
-  <img src="https://www.hello-algo.com/index.assets/animation.gif" width="400">
-  <a>&nbsp;</a>
-  <img src="https://www.hello-algo.com/index.assets/running_code.gif" width="400">
+  <img src="https://www.hello-algo.com/index.assets/animation.gif" width="49%">
+  <img src="https://www.hello-algo.com/index.assets/running_code.gif" width="49%">
 </p>
 
 <p align="center">
-  <em>
-    前往阅读 >
     <a href="https://www.hello-algo.com/">
-    hello-algo.com
+    阅读网页版
     </a>
-  </em>
+  &nbsp; | &nbsp;
+    <a href="https://github.com/krahets/hello-algo/releases">
+    下载 PDF 版
+    </a>
 </p>
 
 ## 关于本书
 
-本书面向数据结构与算法初学者，致力于达成以下目标：
+本项目旨在打造一本开源免费、新手友好的数据结构与算法入门教程。
 
-- 开源免费，所有同学都可在网上获取本书；
-- 新手友好，适合算法初学者自主学习入门；
-- 动画讲解，尽可能地保证平滑的学习曲线；
-- 代码导向，提供可一键运行的算法源代码；
-- 讨论学习，提问一般能在三日内得到回复；
+- 全书采用动画图解，内容清晰易懂、学习曲线平滑，引导初学者探索数据结构与算法的“知识地图”；
+- 源代码可一键运行，帮助读者在实践练习中提升编程技能，了解算法工作原理和数据结构底层实现；
+- 鼓励读者互助学习，提问与评论通常可在两日内得到回复；
 
-如果感觉本书对你有所帮助，请点个 Star :star: 支持一下，谢谢！
+若本书对您有所帮助，请点个 Star :star: 支持一下，谢谢！
 
 ## 推荐语
 
@@ -47,21 +45,25 @@
 >
 > **—— 邓俊辉，清华大学计算机系教授**
 
-## 贡献
+> “如果我当年学数据结构与算法的时候有《Hello 算法》，学起来应该会简单 10 倍！”
+>
+> **—— 李沐，亚马逊资深首席科学家**
 
-我们正在加速更新本书，期待您来[一起参与创作](https://www.hello-algo.com/chapter_preface/contribution/)，以帮助其他读者获取更优质的学习内容：
+## 参与写作
 
-- 如果发现笔误、无效链接、内容缺失、文字歧义、解释不清晰等问题，烦请您帮忙修正；
-- [代码翻译](https://github.com/krahets/hello-algo/issues/15) C++, Python, Go, JavaScript, TypeScript 正在进行中，期望您前来挑大梁；
-- 欢迎您通过提交 Pull Request 来增添新内容，包括重写章节、新增章节等；
+我们正在加速更新本书，欢迎您通过提交 Pull Request 来[参与本项目](https://www.hello-algo.com/chapter_appendix/contribution/)，以帮助其他读者获取更优质的学习内容。
 
-> 有任何问题请与我联系 WeChat: krahets-jyd
+- 若您发现语法错误、内容缺失、文字歧义、无效链接、解释不清晰等问题，请协助修正或在评论区指出；
+- 期待您参与 C++, Python, Go, JavaScript, TypeScript, C, C#, Swift, Zig, Rust, Dart 等语言的[代码翻译](https://github.com/krahets/hello-algo/issues/15)；
+- 欢迎您为本书内容提出宝贵意见和建议，如有任何问题请提交 Issues 或微信联系 krahets-jyd ；
 
 感谢本开源书的每一位撰稿人，是他们的无私奉献让这本书变得更好，他们是：
 
-<a href="https://github.com/krahets/hello-algo/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=krahets/hello-algo" />
-</a>
+<p align="left">
+    <a href="https://github.com/krahets/hello-algo/graphs/contributors">
+        <img width="550" src="https://contrib.rocks/image?repo=krahets/hello-algo" />
+    </a>
+</p>
 
 ## License
 
