@@ -1,3 +1,5 @@
+> ⚠️ The English translation of this repo is still in progress. For the original Chinese version, please visit [krahets/hello-algo](https://github.com/krahets/hello-algo).
+
 <p align="center">
   <a href="https://www.hello-algo.com/">
     <img src="https://www.hello-algo.com/index.assets/conceptual_rendering.png" width="200">
