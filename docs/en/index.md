@@ -10,16 +10,32 @@ hide:
     ![conceptual_rendering](index.assets/conceptual_rendering.png){ align=left width=350 }
     </br></br></br></br></br>
     <h1 align="center"><i> Hello, Algorithm </i></h1>
-    <p align="center"> Illustrations & Animations, Click & Run, Community Discussions</br>A quick start tutorial for data structures and algorithms </p>
+    <p align="center"> Animated Illustrations, Click & Run, Community Discussions</br>Your one stop crash course to data structures and algorithms </p>
     <p align="center"> [![github-stars](https://img.shields.io/github/stars/krahets/hello-algo?style=social)](https://github.com/krahets/hello-algo)</p>
     <h6 align="center"> [@Krahets](https://leetcode.cn/u/jyd/) </h6>
     </div>
 
 ---
 
-<h2 align="center"><i> Clear Illustrations & Animations </i></h2>
+<h2 align="center"> Recommendations </h2>
 
-<p align="center"> Key points with animation, learning with relaxation</br>Seamless reading on PC, tablet, and mobile </p>
+!!! quote
+
+    "An easy-to-understand introductory book on data structures and algorithms, which guides readers to learn by thinking and practicing, strongly recommended for algorithm beginners."
+
+    **—— Junhui Deng, Professor of Computer Science, Tsinghua University**
+
+!!! quote
+
+    "If I had Hello Algorithm when I was learning data structures and algorithms, it would have been 10 times easier!"
+
+    **—— Mu Li, Senior Principal Scientist, Amazon**
+
+---
+
+<h3 align="center"><i> Clear Illustrations & Animations </i></h3>
+
+<p align="center"> Easy-to-understand content, smooth learning curve</br>Seamless experience on PC, tablet, and mobile </p>
 
 ![algorithm_animation](index.assets/animation.gif)
 
@@ -29,9 +45,9 @@ hide:
 
 ---
 
-<h2 align="center"><i> Learning by Practicing </i></h2>
+<h3 align="center"><i> Run Code With One Click </i></h3>
 
-<p align="center"> Provide clear implementations and test codes of classic algorithms</br>Multiple languages, detailed comments, all runnable </p>
+<p align="center"> Provide clear implementations and test samples of classic algorithms</br>Support Java, C++, Python, Go, JS, TS, C#, Swift, Zig and much more </p>
 
 ![running_code](index.assets/running_code.gif)
 
@@ -41,9 +57,9 @@ hide:
 
 ---
 
-<h2 align="center"><i> With Discussions & Questions </i></h2>
+<h3 align="center"><i> Community Discussions </i></h3>
 
-<p align="center"> Author usually replies within 72 hours</br>Discuss with other readers and improve together </p>
+<p align="center"> We encourage discussions and interactions. Questions are usually replied within 2 days. </p>
 
 ![comment](index.assets/comment.gif)
 
@@ -53,20 +69,45 @@ hide:
 
 ---
 
-<h2 align="center"> Recommendations </h2>
+<h2 align="center"> Preface </h2>
 
-!!! quote
+Two years ago, I shared my solutions for the *Coding Interview* series on LeetCode CN, which was well received by many readers. During such period, I answered numerous questions from readers, and the most common one was "How to get started with algorithms". Gradually, I became fascinated with this topic.
 
-    "An easy-to-understand beginners' guide to data structures and algorithms, guiding readers to learn with both hands and brains, and strongly recommended for algorithm beginners to read."
+Going blindly into the sea of algorithm questions seems to be the most common approach, as it is easy and effective. However, this is like playing the game of "Minesweeper". People with robust self-learning strategies can easily clear the mines one by one, while those with weak foundations are likely to be blown up and retreat in frustration. Reading textbooks is also a common practice, but for students who are preparing for the industry, graduation season, resume submission, and interview preparation have already taken up most of their time and energy. Thick textbooks often become a daunting challenge.
 
-    **—— 邓俊辉, Prof. of Computer Science, Tsinghua University**
+If you are presented with similar challenges, then I'm glad that this book finds you. This book is my answer to this problem. Although it may not be correct, it is at least an educated attempt. This book may not be enough to guarantee you an offer, but it will guide you to explore the "knowledge map" of data structures and algorithms, helping you understand the shape, size, and distribution of different "mines", and master various "mine sweeping methods". With these skills, I believe you can deal with algorithm questions and literature reading with more confidence, and gradually build a complete knowledge system.
+
+<h3 align="left"> About the author </h3>
+
+Yudong Jin (Krahets), Senior Algorithm Engineer, Master at Shanghai Jiaotong University, most viewed author on LeetCode CN, his LeetBook *Diagrammatic Understanding of Data Structures and Algorithms* has been subscribed for 220k copies.
+
+---
 
 <h2 align="center"> Acknowledgements </h2>
 
-A huge thanks to the following people for their contributions to this project, without whom this book would not be as it is today:
+This book is nurtured by many contributors in our open source community. A huge thanks to all of them for their contributions to this project, their contribution made this book possible, they are (listed as how it is generated by GitHub):
 
-<a href="https://github.com/krahets/hello-algo/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=krahets/hello-algo" />
-</a>
+<p align="center">
+    <a href="https://github.com/krahets/hello-algo/graphs/contributors">
+        <img width="550" src="https://contrib.rocks/image?repo=krahets/hello-algo" />
+    </a>
+</p>
+
+The code review of this book is done by Gonglja, justin‐tse, krahets, nuomi1, Reanon, sjinzh (sorted by GitHub username). Their time and effort ensured the unity and quality of the code in this book.
+
+<div class="center-table">
+    <table>
+        <tbody>
+            <td align="center"><a href="https://github.com/Gonglja"><img src="https://avatars.githubusercontent.com/u/39959756?v=4" width="50px;" alt="Gonglja"/><br /><sub><b>Gonglja</b></sub></a><br /><sub>C / C++</sub></td>
+            <td align="center"><a href="https://github.com/justin-tse"><img src="https://avatars.githubusercontent.com/u/24556310?v=4" width="50px;" alt="justin-tse"/><br /><sub><b>justin-tse</b></sub></a><br /><sub>JS / TS</sub></td>
+            <td align="center"><a href="https://github.com/krahets"><img src="https://avatars.githubusercontent.com/u/26993056?v=4" width="50px;" alt="krahets"/><br /><sub><b>krahets</b></sub></a><br /><sub>Java / Python</sub></td>
+            <td align="center"><a href="https://github.com/nuomi1"><img src="https://avatars.githubusercontent.com/u/3739017?v=4" width="50px;" alt="nuomi1"/><br /><sub><b>nuomi1</b></sub></a><br /><sub>Swift</sub></td>
+            <td align="center"><a href="https://github.com/Reanon"><img src="https://avatars.githubusercontent.com/u/22005836?v=4" width="50px;" alt="Reanon"/><br /><sub><b>Reanon</b></sub></a><br /><sub>Go / C</sub></td>
+            <td align="center"><a href="https://github.com/sjinzh"><img src="https://avatars.githubusercontent.com/u/99076655?v=4" width="50px;" alt="sjinzh"/><br /><sub><b>sjinzh</b></sub></a><br /><sub>Rust / Zig</sub></td>
+        </tbody>
+    </table>
+</div>
+
+The translation of this English version is performed by YuelinXin.
 
 ---
