@@ -8,7 +8,7 @@ include!("../include/include.rs");
 
 use rand::Rng;
 
-/* 随机返回一个数组元素 */
+/* 随机访问元素 */
 fn random_access(nums: &[i32]) -> i32 {
     // 在区间 [0, nums.len()) 中随机抽取一个数字
     let random_index = rand::thread_rng().gen_range(0..nums.len());
@@ -72,6 +72,7 @@ fn find(nums: &[i32], target: i32) -> Option<usize> {
 
 /* Driver Code */
 fn main() {
+    /* 初始化数组 */
     let arr = [0; 5];
     print!("数组 arr = ");
     print_util::print_array(&arr);

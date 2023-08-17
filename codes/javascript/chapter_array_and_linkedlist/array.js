@@ -4,7 +4,7 @@
  * Author: IsChristina (christinaxia77@foxmail.com)
  */
 
-/* 随机返回一个数组元素 */
+/* 随机访问元素 */
 function randomAccess(nums) {
     // 在区间 [0, nums.length) 中随机抽取一个数字
     const random_index = Math.floor(Math.random() * nums.length);
@@ -53,7 +53,7 @@ function traverse(nums) {
         count++;
     }
     // 直接遍历数组
-    for (let num of nums) {
+    for (const num of nums) {
         count += 1;
     }
 }
@@ -61,7 +61,7 @@ function traverse(nums) {
 /* 在数组中查找指定元素 */
 function find(nums, target) {
     for (let i = 0; i < nums.length; i++) {
-        if (nums[i] == target) return i;
+        if (nums[i] === target) return i;
     }
     return -1;
 }

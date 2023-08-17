@@ -13,16 +13,6 @@
 #include <sstream>
 #include <string>
 
-/* Expose the underlying storage of the priority_queue container */
-template <typename T, typename S, typename C> S &Container(priority_queue<T, S, C> &pq) {
-    struct HackedQueue : private priority_queue<T, S, C> {
-        static S &Container(priority_queue<T, S, C> &pq) {
-            return pq.*&HackedQueue::c;
-        }
-    };
-    return HackedQueue::Container(pq);
-}
-
 /* Find an element in a vector */
 template <typename T> int vecFind(const vector<T> &vec, T ele) {
     int j = INT_MAX;
@@ -217,13 +207,23 @@ template <typename TKey, typename TValue> void printHashMap(unordered_map<TKey, 
     }
 }
 
+/* Expose the underlying storage of the priority_queue container */
+template <typename T, typename S, typename C> S &Container(priority_queue<T, S, C> &pq) {
+    struct HackedQueue : private priority_queue<T, S, C> {
+        static S &Container(priority_queue<T, S, C> &pq) {
+            return pq.*&HackedQueue::c;
+        }
+    };
+    return HackedQueue::Container(pq);
+}
+
 /* Print a Heap (PriorityQueue) */
 template <typename T, typename S, typename C> void printHeap(priority_queue<T, S, C> &heap) {
     vector<T> vec = Container(heap);
     cout << "堆的数组表示：";
     printVector(vec);
     cout << "堆的树状表示：" << endl;
-    TreeNode *root = vecToTree(vec);
+    TreeNode *root = vectorToTree(vec);
     printTree(root);
     freeMemoryTree(root);
 }

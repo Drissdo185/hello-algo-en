@@ -1,16 +1,10 @@
----
-comments: true
----
-
 # About the Book
 
-Something happened 5 years ago became the pivoting point of my career. At that time, I was a graduate student at SJTU, and I knew nothing about getting a job in tech companies. But I still applied for a Microsoft software engineer internship. The interviewer asked me to write the "quick sort" code on a whiteboard. I timidly wrote a "bubble sort", and I even got that wrong ` (ToT) `. From the interviewer's face, the only two words I saw were "Game Over".
+This project aims to provide a free, open-source and beginner friendly crash course to data structures and algorithms.
 
-The hit I took this time forced me to start crawling through algorithm questions. I used the "minesweeper" method of learning, with my eyes closed and my head covered, crawling through the questions, and when I encountered something I couldn't solve, I would look it up and "remove the mine". Combined with periodic summaries, I gradually formed a knowledge map of data structures and algorithms. Fortunately, I got multiple offers from big tech companies in the autumn recruitment.
-
-When I looked back on my own experience of being blown up in the "minesweeper" method of learning, with my mind jiggling about it for a long time, and I realized that a "must-read" book for the "newbies" can help them avoid many detours. The desire to write came in like a wrecking ball, so let's get started:
-
-<h4 align="center"> Hello，Algorithm！ </h4>
+- Animated illustrations through put the book, systematically introduce data structures and algorithms, with easy to understand content and smooth learning curve;
+- Run any source code with just one click, supports Java, C++, Python, Go, JS, TS, C#, Swift and Zig;
+- We encourage readers to help each other. Questions and comments are usually answered within two days;
 
 ## Audience
 
@@ -18,11 +12,7 @@ When I looked back on my own experience of being blown up in the "minesweeper" m
 
     You should know how to write and read simple code in at least one programming language.
 
-If you are an **algorithm beginner**, you have never touched algorithms before, or you have accumulated some algorithm experience, but you only have a vague understanding of data structures and algorithms, and you are constantly jumping between "know" and "don't know", then this book is for you! This book can bring you:
-
-- An understanding of **data structures** required to go through algorithm questions, including common operations, advantages and disadvantages, typical applications, and implementation methods.
-- Learning all sorts of **algorithms**, introducing the design ideas, running efficiency, advantages and disadvantages, and implementation methods of algorithms.
-- A **code repository** that can be run with one click, including detailed comments to help you deepen your understanding through practice.
+If you are an **algorithm beginner**, you have never learned algorithms before, or you have accumulated some algorithm experience, but you only have a vague understanding of data structures and algorithms, and you are constantly jumping between "Yep" and "hmm", then this book is for you!
 
 If you are an **algorithm proficient**, you have accumulated a certain amount of algorithm experience, and have been exposed to most types of questions, then the content of this book may be slightly basic for you, but it can still bring you the following value:
 
@@ -32,7 +22,7 @@ If you are an **algorithm proficient**, you have accumulated a certain amount of
 
 If you are an **algorithm expert**, then you have my respect! I hope you can take the time to provide some advice and suggestions, or [join us to collaborate](https://www.hello-algo.com/chapter_preface/contribution/), and help algorithms learners by producing better materials, thank you!
 
-## Book Structure
+## Content Structure
 
 The main content of this book is divided into three parts: complexity analysis, data structures, and algorithms.
 

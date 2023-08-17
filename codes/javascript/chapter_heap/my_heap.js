@@ -103,7 +103,7 @@ class MaxHeap {
             if (l < this.size() && this.#maxHeap[l] > this.#maxHeap[ma]) ma = l;
             if (r < this.size() && this.#maxHeap[r] > this.#maxHeap[ma]) ma = r;
             // 若节点 i 最大或索引 l, r 越界，则无需继续堆化，跳出
-            if (ma == i) break;
+            if (ma === i) break;
             // 交换两节点
             this.#swap(i, ma);
             // 循环向下堆化
@@ -114,6 +114,11 @@ class MaxHeap {
     /* 打印堆（二叉树） */
     print() {
         printHeap(this.#maxHeap);
+    }
+
+    /* 取出堆中元素 */
+    getMaxHeap() {
+        return this.#maxHeap;
     }
 }
 
@@ -145,3 +150,8 @@ console.log(`\n堆元素数量为 ${size}`);
 /* 判断堆是否为空 */
 let isEmpty = maxHeap.isEmpty();
 console.log(`\n堆是否为空 ${isEmpty}`);
+
+
+module.exports = {
+    MaxHeap,
+};
