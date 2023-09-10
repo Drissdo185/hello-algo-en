@@ -1,498 +1,217 @@
----
-comments: true
----
-
 # 二分查找
 
-「二分查找 Binary Search」利用数据的有序性，通过每轮缩小一半搜索区间来查找目标元素。
+「二分查找 binary search」是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮减少一半搜索范围，直至找到目标元素或搜索区间为空为止。
 
-使用二分查找有两个前置条件：
+!!! question
 
-- **要求输入数据是有序的**，这样才能通过判断大小关系来排除一半的搜索区间；
-- **二分查找仅适用于数组**，而在链表中使用效率很低，因为其在循环中需要跳跃式（非连续地）访问元素。
+    给定一个长度为 $n$ 的数组 `nums` ，元素按从小到大的顺序排列，数组不包含重复元素。请查找并返回元素 `target` 在该数组中的索引。若数组不包含该元素，则返回 $-1$ 。
 
-## 算法实现
+![二分查找示例数据](binary_search.assets/binary_search_example.png)
 
-给定一个长度为 $n$ 的排序数组 `nums` ，元素从小到大排列。数组的索引取值范围为
+如下图所示，我们先初始化指针 $i = 0$ 和 $j = n - 1$ ，分别指向数组首元素和尾元素，代表搜索区间 $[0, n - 1]$ 。请注意，中括号表示闭区间，其包含边界值本身。
 
-$$
-0, 1, 2, \cdots, n-1
-$$
+接下来，循环执行以下两步。
 
-使用「区间」来表示这个取值范围的方法主要有两种：
+1. 计算中点索引 $m = \lfloor {(i + j) / 2} \rfloor$ ，其中 $\lfloor \: \rfloor$ 表示向下取整操作。
+2. 判断 `nums[m]` 和 `target` 的大小关系，分为以下三种情况。
+    1. 当 `nums[m] < target` 时，说明 `target` 在区间 $[m + 1, j]$ 中，因此执行 $i = m + 1$ 。
+    2. 当 `nums[m] > target` 时，说明 `target` 在区间 $[i, m - 1]$ 中，因此执行 $j = m - 1$ 。
+    3. 当 `nums[m] = target` 时，说明找到 `target` ，因此返回索引 $m$ 。
 
-1. **双闭区间 $[0, n-1]$** ，即两个边界都包含自身；此方法下，区间 $[0, 0]$ 仍包含一个元素；
-2. **左闭右开 $[0, n)$** ，即左边界包含自身、右边界不包含自身；此方法下，区间 $[0, 0)$ 为空；
+若数组不包含目标元素，搜索区间最终会缩小为空。此时返回 $-1$ 。
 
-### “双闭区间”实现
+=== "<1>"
+    ![二分查找流程](binary_search.assets/binary_search_step1.png)
 
-首先，我们先采用“双闭区间”的表示，在数组 `nums` 中查找目标元素 `target` 的对应索引。
-
-=== "Step 1"
-    ![binary_search_step1](binary_search.assets/binary_search_step1.png)
-
-=== "Step 2"
+=== "<2>"
     ![binary_search_step2](binary_search.assets/binary_search_step2.png)
 
-=== "Step 3"
+=== "<3>"
     ![binary_search_step3](binary_search.assets/binary_search_step3.png)
 
-=== "Step 4"
+=== "<4>"
     ![binary_search_step4](binary_search.assets/binary_search_step4.png)
 
-=== "Step 5"
+=== "<5>"
     ![binary_search_step5](binary_search.assets/binary_search_step5.png)
 
-=== "Step 6"
+=== "<6>"
     ![binary_search_step6](binary_search.assets/binary_search_step6.png)
 
-=== "Step 7"
+=== "<7>"
     ![binary_search_step7](binary_search.assets/binary_search_step7.png)
 
-二分查找“双闭区间”表示下的代码如下所示。
+值得注意的是，由于 $i$ 和 $j$ 都是 `int` 类型，**因此 $i + j$ 可能会超出 `int` 类型的取值范围**。为了避免大数越界，我们通常采用公式 $m = \lfloor {i + (j - i) / 2} \rfloor$ 来计算中点。
 
-=== "Java"
+=== "Python"
 
-    ```java title="binary_search.java"
-    /* 二分查找（双闭区间） */
-    int binarySearch(int[] nums, int target) {
-        // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
-        int i = 0, j = nums.length - 1;
-        // 循环，当搜索区间为空时跳出（当 i > j 时为空）
-        while (i <= j) {
-            int m = (i + j) / 2;       // 计算中点索引 m
-            if (nums[m] < target)      // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1;
-            else if (nums[m] > target) // 此情况说明 target 在区间 [i, m-1] 中
-                j = m - 1;
-            else                       // 找到目标元素，返回其索引
-                return m;
-        }
-        // 未找到目标元素，返回 -1
-        return -1;
-    }
+    ```python title="binary_search.py"
+    [class]{}-[func]{binary_search}
     ```
 
 === "C++"
 
     ```cpp title="binary_search.cpp"
-    /* 二分查找（双闭区间） */
-    int binarySearch(vector<int>& nums, int target) {
-        // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
-        int i = 0, j = nums.size() - 1;
-        // 循环，当搜索区间为空时跳出（当 i > j 时为空）
-        while (i <= j) {
-            int m = (i + j) / 2;       // 计算中点索引 m
-            if (nums[m] < target)      // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1;
-            else if (nums[m] > target) // 此情况说明 target 在区间 [i, m-1] 中
-                j = m - 1;
-            else                       // 找到目标元素，返回其索引
-                return m;
-        }
-        // 未找到目标元素，返回 -1
-        return -1;
-    }
+    [class]{}-[func]{binarySearch}
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title="binary_search.py"
-    """ 二分查找（双闭区间） """
-    def binary_search(nums, target):
-        # 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
-        i, j = 0, len(nums) - 1
-        while i <= j:
-            m = (i + j) // 2        # 计算中点索引 m
-            if nums[m] < target:    # 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1
-            elif nums[m] > target:  # 此情况说明 target 在区间 [i, m-1] 中
-                j = m - 1
-            else:
-                return m            # 找到目标元素，返回其索引
-        return -1                   # 未找到目标元素，返回 -1
-    ```
-
-=== "Go"
-
-    ```go title="binary_search.go"
-    /* 二分查找（双闭区间） */
-    func binarySearch(nums []int, target int) int {
-        // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
-        i, j := 0, len(nums)-1
-        // 循环，当搜索区间为空时跳出（当 i > j 时为空）
-        for i <= j {
-            m := (i + j) / 2                // 计算中点索引 m
-            if nums[m] < target {           // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1
-            } else if nums[m] > target {    // 此情况说明 target 在区间 [i, m-1] 中
-                j = m - 1
-            } else {                        // 找到目标元素，返回其索引
-                return m
-            }
-        }
-        // 未找到目标元素，返回 -1
-        return -1
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="binary_search.js"
-    /* 二分查找（双闭区间） */
-    function binarySearch(nums, target) {
-    // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
-    let i = 0, j = nums.length - 1;
-    // 循环，当搜索区间为空时跳出（当 i > j 时为空）
-    while (i <= j) {
-        let m = parseInt((i + j) / 2); // 计算中点索引 m ，在 JS 中需使用 parseInt 函数取整
-        if (nums[m] < target)          // 此情况说明 target 在区间 [m+1, j] 中
-            i = m + 1;
-        else if (nums[m] > target)     // 此情况说明 target 在区间 [i, m-1] 中
-            j = m - 1;
-        else
-            return m;                  // 找到目标元素，返回其索引
-        }
-    // 未找到目标元素，返回 -1
-    return -1;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="binary_search.ts"
-    /* 二分查找（双闭区间） */
-    const binarySearch = function (nums: number[], target: number): number {
-        // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
-        let i = 0, j = nums.length - 1;
-        // 循环，当搜索区间为空时跳出（当 i > j 时为空）
-        while (i <= j) {
-            const m = Math.floor(i + (j - i) / 2);  // 计算中点索引 m
-            if (nums[m] < target) {                 // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1;
-            } else if (nums[m] > target) {          // 此情况说明 target 在区间 [i, m-1] 中
-                j = m - 1;
-            } else {                                // 找到目标元素，返回其索引
-                return m;
-            }
-        }
-        return -1; // 未找到目标元素，返回 -1
-    }
-    ```
-
-=== "C"
-
-    ```c title="binary_search.c"
-
+    ```java title="binary_search.java"
+    [class]{binary_search}-[func]{binarySearch}
     ```
 
 === "C#"
 
     ```csharp title="binary_search.cs"
-    /* 二分查找（双闭区间） */
-    int binarySearch(int[] nums, int target)
-    {
-        // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
-        int i = 0, j = nums.Length - 1;
-        // 循环，当搜索区间为空时跳出（当 i > j 时为空）
-        while (i <= j)
-        {
-            int m = (i + j) / 2;       // 计算中点索引 m
-            if (nums[m] < target)      // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1;
-            else if (nums[m] > target) // 此情况说明 target 在区间 [i, m-1] 中
-                j = m - 1;
-            else                       // 找到目标元素，返回其索引
-                return m;
-        }
-        // 未找到目标元素，返回 -1
-        return -1;
-    }
+    [class]{binary_search}-[func]{binarySearch}
+    ```
+
+=== "Go"
+
+    ```go title="binary_search.go"
+    [class]{}-[func]{binarySearch}
     ```
 
 === "Swift"
 
     ```swift title="binary_search.swift"
-
+    [class]{}-[func]{binarySearch}
     ```
 
-### “左闭右开”实现
+=== "JS"
 
-当然，我们也可以使用“左闭右开”的表示方法，写出相同功能的二分查找代码。
+    ```javascript title="binary_search.js"
+    [class]{}-[func]{binarySearch}
+    ```
 
-=== "Java"
+=== "TS"
 
-    ```java title="binary_search.java"
-    /* 二分查找（左闭右开） */
-    int binarySearch1(int[] nums, int target) {
-        // 初始化左闭右开 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
-        int i = 0, j = nums.length;
-        // 循环，当搜索区间为空时跳出（当 i = j 时为空）
-        while (i < j) {
-            int m = (i + j) / 2;       // 计算中点索引 m
-            if (nums[m] < target)      // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1;
-            else if (nums[m] > target) // 此情况说明 target 在区间 [i, m] 中
-                j = m;
-            else                       // 找到目标元素，返回其索引
-                return m;
-        }
-        // 未找到目标元素，返回 -1
-        return -1;
-    }
+    ```typescript title="binary_search.ts"
+    [class]{}-[func]{binarySearch}
+    ```
+
+=== "Dart"
+
+    ```dart title="binary_search.dart"
+    [class]{}-[func]{binarySearch}
+    ```
+
+=== "Rust"
+
+    ```rust title="binary_search.rs"
+    [class]{}-[func]{binary_search}
+    ```
+
+=== "C"
+
+    ```c title="binary_search.c"
+    [class]{}-[func]{binarySearch}
+    ```
+
+=== "Zig"
+
+    ```zig title="binary_search.zig"
+    [class]{}-[func]{binarySearch}
+    ```
+
+**时间复杂度 $O(\log n)$** ：在二分循环中，区间每轮缩小一半，循环次数为 $\log_2 n$ 。
+
+**空间复杂度 $O(1)$** ：指针 $i$ 和 $j$ 使用常数大小空间。
+
+## 区间表示方法
+
+除了上述的双闭区间外，常见的区间表示还有“左闭右开”区间，定义为 $[0, n)$ ，即左边界包含自身，右边界不包含自身。在该表示下，区间 $[i, j]$ 在 $i = j$ 时为空。
+
+我们可以基于该表示实现具有相同功能的二分查找算法。
+
+=== "Python"
+
+    ```python title="binary_search.py"
+    [class]{}-[func]{binary_search_lcro}
     ```
 
 === "C++"
 
     ```cpp title="binary_search.cpp"
-    /* 二分查找（左闭右开） */
-    int binarySearch1(vector<int>& nums, int target) {
-        // 初始化左闭右开 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
-        int i = 0, j = nums.size();
-        // 循环，当搜索区间为空时跳出（当 i = j 时为空）
-        while (i < j) {
-            int m = (i + j) / 2;       // 计算中点索引 m
-            if (nums[m] < target)      // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1;
-            else if (nums[m] > target) // 此情况说明 target 在区间 [i, m] 中
-                j = m;
-            else                       // 找到目标元素，返回其索引
-                return m;
-        }
-        // 未找到目标元素，返回 -1
-        return -1;
-    }
+    [class]{}-[func]{binarySearchLCRO}
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title="binary_search.py"
-    """ 二分查找（左闭右开） """
-    def binary_search1(nums, target):
-        # 初始化左闭右开 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
-        i, j = 0, len(nums)
-        # 循环，当搜索区间为空时跳出（当 i = j 时为空）
-        while i < j:
-            m = (i + j) // 2        # 计算中点索引 m
-            if nums[m] < target:    # 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1
-            elif nums[m] > target:  # 此情况说明 target 在区间 [i, m] 中
-                j = m
-            else:                   # 找到目标元素，返回其索引
-                return m
-        return -1                   # 未找到目标元素，返回 -1
-    ```
-
-=== "Go"
-
-    ```go title="binary_search.go"
-    /* 二分查找（左闭右开） */
-    func binarySearch1(nums []int, target int) int {
-        // 初始化左闭右开 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
-        i, j := 0, len(nums)
-        // 循环，当搜索区间为空时跳出（当 i = j 时为空）
-        for i < j {
-            m := (i + j) / 2             // 计算中点索引 m
-            if nums[m] < target {        // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1
-            } else if nums[m] > target { // 此情况说明 target 在区间 [i, m] 中
-                j = m
-            } else {                     // 找到目标元素，返回其索引
-                return m
-            }
-        }
-        // 未找到目标元素，返回 -1
-        return -1
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="binary_search.js"
-    /* 二分查找（左闭右开） */
-    function binarySearch1(nums, target) {
-    // 初始化左闭右开 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
-    let i = 0, j = nums.length;
-    // 循环，当搜索区间为空时跳出（当 i = j 时为空）
-    while (i < j) {
-        let m = parseInt((i + j) / 2); // 计算中点索引 m ，在 JS 中需使用 parseInt 函数取整
-        if (nums[m] < target)          // 此情况说明 target 在区间 [m+1, j] 中
-            i = m + 1;
-        else if (nums[m] > target)     // 此情况说明 target 在区间 [i, m] 中
-            j = m;
-        else                           // 找到目标元素，返回其索引
-            return m;
-        }
-    // 未找到目标元素，返回 -1
-    return -1;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="binary_search.ts"
-    /* 二分查找（左闭右开） */
-    const binarySearch1 = function (nums: number[], target: number): number {
-        // 初始化左闭右开 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
-        let i = 0, j = nums.length;
-        // 循环，当搜索区间为空时跳出（当 i = j 时为空）
-        while (i < j) {
-            const m = Math.floor(i + (j - i) / 2);  // 计算中点索引 m
-            if (nums[m] < target) {                 // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1;
-            } else if (nums[m] > target) {          // 此情况说明 target 在区间 [i, m] 中
-                j = m;
-            } else {                                // 找到目标元素，返回其索引
-                return m;
-            }
-        }
-        return -1; // 未找到目标元素，返回 -1
-    }
-    ```
-
-=== "C"
-
-    ```c title="binary_search.c"
-
+    ```java title="binary_search.java"
+    [class]{binary_search}-[func]{binarySearchLCRO}
     ```
 
 === "C#"
 
     ```csharp title="binary_search.cs"
-    /* 二分查找（左闭右开） */
-    int binarySearch1(int[] nums, int target)
-    {
-        // 初始化左闭右开 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
-        int i = 0, j = nums.Length;
-        // 循环，当搜索区间为空时跳出（当 i = j 时为空）
-        while (i < j)
-        {
-            int m = (i + j) / 2;       // 计算中点索引 m
-            if (nums[m] < target)      // 此情况说明 target 在区间 [m+1, j] 中
-                i = m + 1;
-            else if (nums[m] > target) // 此情况说明 target 在区间 [i, m] 中
-                j = m;
-            else                       // 找到目标元素，返回其索引
-                return m;
-        }
-        // 未找到目标元素，返回 -1
-        return -1;
-    }
+    [class]{binary_search}-[func]{binarySearchLCRO}
+    ```
+
+=== "Go"
+
+    ```go title="binary_search.go"
+    [class]{}-[func]{binarySearchLCRO}
     ```
 
 === "Swift"
 
     ```swift title="binary_search.swift"
-
+    [class]{}-[func]{binarySearchLCRO}
     ```
 
-### 两种表示对比
+=== "JS"
 
-对比下来，两种表示的代码写法有以下不同点：
-
-<div class="center-table" markdown>
-
-| 表示方法            | 初始化指针          | 缩小区间                  | 循环终止条件 |
-| ------------------- | ------------------- | ------------------------- | ------------ |
-| 双闭区间 $[0, n-1]$ | $i = 0$ , $j = n-1$ | $i = m + 1$ , $j = m - 1$ | $i > j$      |
-| 左闭右开 $[0, n)$   | $i = 0$ , $j = n$   | $i = m + 1$ , $j = m$     | $i = j$      |
-
-</div>
-
-观察发现，在“双闭区间”表示中，由于对左右两边界的定义是相同的，因此缩小区间的 $i$ , $j$ 处理方法也是对称的，这样更不容易出错。综上所述，**建议你采用“双闭区间”的写法。**
-
-### 大数越界处理
-
-当数组长度很大时，加法 $i + j$ 的结果有可能会超出 `int` 类型的取值范围。在此情况下，我们需要换一种计算中点的写法。
-
-=== "Java"
-
-    ```java title=""
-    // (i + j) 有可能超出 int 的取值范围
-    int m = (i + j) / 2;
-    // 更换为此写法则不会越界
-    int m = i + (j - i) / 2;
+    ```javascript title="binary_search.js"
+    [class]{}-[func]{binarySearchLCRO}
     ```
 
-=== "C++"
+=== "TS"
 
-    ```cpp title=""
-    // (i + j) 有可能超出 int 的取值范围
-    int m = (i + j) / 2;
-    // 更换为此写法则不会越界
-    int m = i + (j - i) / 2;
+    ```typescript title="binary_search.ts"
+    [class]{}-[func]{binarySearchLCRO}
     ```
 
-=== "Python"
+=== "Dart"
 
-    ```py title=""
-    # Python 中的数字理论上可以无限大（取决于内存大小）
-    # 因此无需考虑大数越界问题
+    ```dart title="binary_search.dart"
+    [class]{}-[func]{binarySearchLCRO}
     ```
 
-=== "Go"
+=== "Rust"
 
-    ```go title=""
-    // (i + j) 有可能超出 int 的取值范围
-    m := (i + j) / 2
-    // 更换为此写法则不会越界
-    m := i + (j - i) / 2
-    ```
-
-=== "JavaScript"
-
-    ```js title=""
-    // (i + j) 有可能超出 int 的取值范围
-    let m = parseInt((i + j) / 2);
-    // 更换为此写法则不会越界
-    let m = parseInt(i + (j - i) / 2);
-    ```
-
-=== "TypeScript"
-
-    ```typescript title=""
-    // (i + j) 有可能超出 Number 的取值范围
-    let m = Math.floor((i + j) / 2);
-    // 更换为此写法则不会越界
-    let m = Math.floor(i + (j - i) / 2);
+    ```rust title="binary_search.rs"
+    [class]{}-[func]{binary_search_lcro}
     ```
 
 === "C"
 
-    ```c title=""
-
+    ```c title="binary_search.c"
+    [class]{}-[func]{binarySearchLCRO}
     ```
 
-=== "C#"
+=== "Zig"
 
-    ```csharp title=""
-    // (i + j) 有可能超出 int 的取值范围
-    int m = (i + j) / 2;
-    // 更换为此写法则不会越界
-    int m = i + (j - i) / 2;
+    ```zig title="binary_search.zig"
+    [class]{}-[func]{binarySearchLCRO}
     ```
 
-=== "Swift"
+如下图所示，在两种区间表示下，二分查找算法的初始化、循环条件和缩小区间操作皆有所不同。
 
-    ```swift title=""
+由于“双闭区间”表示中的左右边界都被定义为闭区间，因此指针 $i$ 和 $j$ 缩小区间操作也是对称的。这样更不容易出错，**因此一般建议采用“双闭区间”的写法**。
 
-    ```
+![两种区间定义](binary_search.assets/binary_search_ranges.png)
 
-## 复杂度分析
+## 优点与局限性
 
-**时间复杂度 $O(\log n)$** ：其中 $n$ 为数组或链表长度；每轮排除一半的区间，因此循环轮数为 $\log_2 n$ ，使用 $O(\log n)$ 时间。
+二分查找在时间和空间方面都有较好的性能。
 
-**空间复杂度 $O(1)$** ：指针 `i` , `j` 使用常数大小空间。
+- 二分查找的时间效率高。在大数据量下，对数阶的时间复杂度具有显著优势。例如，当数据大小 $n = 2^{20}$ 时，线性查找需要 $2^{20} = 1048576$ 轮循环，而二分查找仅需 $\log_2 2^{20} = 20$ 轮循环。
+- 二分查找无须额外空间。相较于需要借助额外空间的搜索算法（例如哈希查找），二分查找更加节省空间。
 
-## 优点与缺点
+然而，二分查找并非适用于所有情况，主要有以下原因。
 
-二分查找效率很高，体现在：
-
-- **二分查找时间复杂度低**。对数阶在数据量很大时具有巨大优势，例如，当数据大小 $n = 2^{20}$ 时，线性查找需要 $2^{20} = 1048576$ 轮循环，而二分查找仅需要 $\log_2 2^{20} = 20$ 轮循环。
-- **二分查找不需要额外空间**。相对于借助额外数据结构来实现查找的算法来说，其更加节约空间使用。
-
-但并不意味着所有情况下都应使用二分查找，这是因为：
-
-- **二分查找仅适用于有序数据**。如果输入数据是无序的，为了使用二分查找而专门执行数据排序，那么是得不偿失的，因为排序算法的时间复杂度一般为 $O(n \log n)$ ，比线性查找和二分查找都更差。再例如，对于频繁插入元素的场景，为了保持数组的有序性，需要将元素插入到特定位置，时间复杂度为 $O(n)$ ，也是非常昂贵的。
-- **二分查找仅适用于数组**。由于在二分查找中，访问索引是 ”非连续“ 的，因此链表或者基于链表实现的数据结构都无法使用。
-- **在小数据量下，线性查找的性能更好**。在线性查找中，每轮只需要 1 次判断操作；而在二分查找中，需要 1 次加法、1 次除法、1 ~ 3 次判断操作、1 次加法（减法），共 4 ~ 6 个单元操作；因此，在数据量 $n$ 较小时，线性查找反而比二分查找更快。
+- 二分查找仅适用于有序数据。若输入数据无序，为了使用二分查找而专门进行排序，得不偿失。因为排序算法的时间复杂度通常为 $O(n \log n)$ ，比线性查找和二分查找都更高。对于频繁插入元素的场景，为保持数组有序性，需要将元素插入到特定位置，时间复杂度为 $O(n)$ ，也是非常昂贵的。
+- 二分查找仅适用于数组。二分查找需要跳跃式（非连续地）访问元素，而在链表中执行跳跃式访问的效率较低，因此不适合应用在链表或基于链表实现的数据结构。
+- 小数据量下，线性查找性能更佳。在线性查找中，每轮只需要 1 次判断操作；而在二分查找中，需要 1 次加法、1 次除法、1 ~ 3 次判断操作、1 次加法（减法），共 4 ~ 6 个单元操作；因此，当数据量 $n$ 较小时，线性查找反而比二分查找更快。

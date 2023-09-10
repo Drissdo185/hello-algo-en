@@ -1,20 +1,34 @@
----
-comments: true
----
-
 # 数组
 
-「数组 Array」是一种将 **相同类型元素** 存储在 **连续内存空间** 的数据结构，将元素在数组中的位置称为元素的「索引 Index」。
+「数组 array」是一种线性数据结构，其将相同类型元素存储在连续的内存空间中。我们将元素在数组中的位置称为该元素的「索引 index」。下图展示了数组的主要术语和概念。
 
-![array_definition](array.assets/array_definition.png)
+![数组定义与存储方式](array.assets/array_definition.png)
 
-<p align="center"> Fig. 数组定义与存储方式 </p>
+## 数组常用操作
 
-!!! note
+### 初始化数组
 
-    观察上图，我们发现 **数组首元素的索引为 $0$** 。你可能会想，这并不符合日常习惯，首个元素的索引为什么不是 $1$ 呢，这不是更加自然吗？我认同你的想法，但请先记住这个设定，后面讲内存地址计算时，我会尝试解答这个问题。
+我们可以根据需求选用数组的两种初始化方式：无初始值、给定初始值。在未指定初始值的情况下，大多数编程语言会将数组元素初始化为 $0$ 。
 
-**数组有多种初始化写法**。根据实际需要，选代码最短的那一种就好。
+=== "Python"
+
+    ```python title="array.py"
+    # 初始化数组
+    arr: list[int] = [0] * 5  # [ 0, 0, 0, 0, 0 ]
+    nums: list[int] = [1, 3, 2, 5, 4]  
+    ```
+
+=== "C++"
+
+    ```cpp title="array.cpp"
+    /* 初始化数组 */
+    // 存储在栈上
+    int arr[5];
+    int nums[5] { 1, 3, 2, 5, 4 };
+    // 存储在堆上（需要手动释放空间）
+    int* arr1 = new int[5];
+    int* nums1 = new int[5] { 1, 3, 2, 5, 4 };
+    ```
 
 === "Java"
 
@@ -24,20 +38,12 @@ comments: true
     int[] nums = { 1, 3, 2, 5, 4 };
     ```
 
-=== "C++"
+=== "C#"
 
-    ```cpp title="array.cpp"
+    ```csharp title="array.cs"
     /* 初始化数组 */
-    int* arr = new int[5];
-    int* nums = new int[5] { 1, 3, 2, 5, 4 };
-    ```
-
-=== "Python"
-
-    ```python title="array.py"
-    """ 初始化数组 """
-    arr = [0] * 5  # [ 0, 0, 0, 0, 0 ]
-    nums = [1, 3, 2, 5, 4]  
+    int[] arr = new int[5]; // { 0, 0, 0, 0, 0 }
+    int[] nums = { 1, 3, 2, 5, 4 };
     ```
 
 === "Go"
@@ -51,36 +57,6 @@ comments: true
     nums := []int{1, 3, 2, 5, 4}
     ```
 
-=== "JavaScript"
-
-    ```javascript title="array.js"
-    /* 初始化数组 */
-    var arr = new Array(5).fill(0);
-    var nums = [1, 3, 2, 5, 4];
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="array.ts"
-    /* 初始化数组 */
-    let arr: number[] = new Array(5).fill(0);
-    let nums: number[] = [1, 3, 2, 5, 4];
-    ```
-
-=== "C"
-
-    ```c title="array.c"
-    
-    ```
-
-=== "C#"
-
-    ```csharp title="array.cs"
-    /* 初始化数组 */
-    int[] arr = new int[5]; // { 0, 0, 0, 0, 0 }
-    int[] nums = { 1, 3, 2, 5, 4 };
-    ```
-
 === "Swift"
 
     ```swift title="array.swift"
@@ -89,725 +65,553 @@ comments: true
     let nums = [1, 3, 2, 5, 4]
     ```
 
-## 数组优点
-
-**在数组中访问元素非常高效**。这是因为在数组中，计算元素的内存地址非常容易。给定数组首个元素的地址、和一个元素的索引，利用以下公式可以直接计算得到该元素的内存地址，从而直接访问此元素。
-
-![array_memory_location_calculation](array.assets/array_memory_location_calculation.png)
-
-<p align="center"> Fig. 数组元素的内存地址计算 </p>
-
-```java title=""
-// 元素内存地址 = 数组内存地址 + 元素长度 * 元素索引
-elementAddr = firtstElementAddr + elementLength * elementIndex
-```
-
-**为什么数组元素索引从 0 开始编号？** 根据地址计算公式，**索引本质上表示的是内存地址偏移量**，首个元素的地址偏移量是 $0$ ，那么索引是 $0$ 也就很自然了。
-
-访问元素的高效性带来了许多便利。例如，我们可以在 $O(1)$ 时间内随机获取一个数组中的元素。
-
-=== "Java"
-
-    ```java title="array.java"
-    /* 随机返回一个数组元素 */
-    int randomAccess(int[] nums) {
-        int randomIndex = ThreadLocalRandom.current().
-                          nextInt(0, nums.length);
-        int randomNum = nums[randomIndex];
-        return randomNum;
-    }
-    ```
-
-=== "C++"
-
-    ```cpp title="array.cpp"
-    /* 随机返回一个数组元素 */
-    int randomAccess(int* nums, int size) {
-        // 在区间 [0, size) 中随机抽取一个数字
-        int randomIndex = rand() % size;
-        // 获取并返回随机元素
-        int randomNum = nums[randomIndex];
-        return randomNum;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="array.py"
-    """ 随机访问元素 """
-    def randomAccess(nums):
-        # 在区间 [0, len(nums)) 中随机抽取一个数字
-        random_index = random.randint(0, len(nums))
-        # 获取并返回随机元素
-        random_num = nums[random_index]
-        return random_num
-    ```
-
-=== "Go"
-
-    ```go title="array.go"
-    /* 随机返回一个数组元素 */
-    func randomAccess(nums []int) (randomNum int) {
-        // 在区间 [0, nums.length) 中随机抽取一个数字
-        randomIndex := rand.Intn(len(nums))
-        // 获取并返回随机元素
-        randomNum = nums[randomIndex]
-        return
-    }
-    ```
-
-=== "JavaScript"
+=== "JS"
 
     ```javascript title="array.js"
-    /* 随机返回一个数组元素 */
-    function randomAccess(nums) {
-        // 在区间 [0, nums.length) 中随机抽取一个数字
-        const random_index = Math.floor(Math.random() * nums.length);
-        // 获取并返回随机元素
-        const random_num = nums[random_index];
-        return random_num;
-    }
+    /* 初始化数组 */
+    var arr = new Array(5).fill(0);
+    var nums = [1, 3, 2, 5, 4];
     ```
 
-=== "TypeScript"
+=== "TS"
 
     ```typescript title="array.ts"
-    /* 随机返回一个数组元素 */
-    function randomAccess(nums: number[]): number {
-        // 在区间 [0, nums.length) 中随机抽取一个数字
-        const random_index = Math.floor(Math.random() * nums.length);
-        // 获取并返回随机元素
-        const random_num = nums[random_index];
-        return random_num;
-    }
+    /* 初始化数组 */
+    let arr: number[] = new Array(5).fill(0);
+    let nums: number[] = [1, 3, 2, 5, 4];
+    ```
+
+=== "Dart"
+
+    ```dart title="array.dart"
+    /* 初始化数组 */
+    List<int> arr = List.filled(5, 0); // [0, 0, 0, 0, 0]
+    List<int> nums = [1, 3, 2, 5, 4];
+    ```
+
+=== "Rust"
+
+    ```rust title="array.rs"
+    /* 初始化数组 */
+    let arr: Vec<i32> = vec![0; 5]; // [0, 0, 0, 0, 0]
+    let nums: Vec<i32> = vec![1, 3, 2, 5, 4];
     ```
 
 === "C"
 
     ```c title="array.c"
-    
+    int arr[5] = { 0 }; // { 0, 0, 0, 0, 0 }
+    int nums[5] = { 1, 3, 2, 5, 4 };
     ```
 
-=== "C#"
+=== "Zig"
 
-    ```csharp title="array.cs"
-    /* 随机返回一个数组元素 */
-    int RandomAccess(int[] nums)
-    {
-        Random random=new();
-        int randomIndex = random.Next(nums.Length);
-        int randomNum = nums[randomIndex];
-        return randomNum;
-    }
+    ```zig title="array.zig"
+    // 初始化数组
+    var arr = [_]i32{0} ** 5; // { 0, 0, 0, 0, 0 }
+    var nums = [_]i32{ 1, 3, 2, 5, 4 };
     ```
 
-=== "Swift"
+### 访问元素
 
-    ```swift title="array.swift"
-    /* 随机返回一个数组元素 */
-    func randomAccess(nums: [Int]) -> Int {
-        // 在区间 [0, nums.count) 中随机抽取一个数字
-        let randomIndex = nums.indices.randomElement()!
-        // 获取并返回随机元素
-        let randomNum = nums[randomIndex]
-        return randomNum
-    }
-    ```
+数组元素被存储在连续的内存空间中，这意味着计算数组元素的内存地址非常容易。给定数组内存地址（即首元素内存地址）和某个元素的索引，我们可以使用下图所示的公式计算得到该元素的内存地址，从而直接访问此元素。
 
-## 数组缺点
+![数组元素的内存地址计算](array.assets/array_memory_location_calculation.png)
 
-**数组在初始化后长度不可变**。由于系统无法保证数组之后的内存空间是可用的，因此数组长度无法扩展。而若希望扩容数组，则需新建一个数组，然后把原数组元素依次拷贝到新数组，在数组很大的情况下，这是非常耗时的。
+观察上图，我们发现数组首个元素的索引为 $0$ ，这似乎有些反直觉，因为从 $1$ 开始计数会更自然。但从地址计算公式的角度看，**索引的含义本质上是内存地址的偏移量**。首个元素的地址偏移量是 $0$ ，因此它的索引为 $0$ 也是合理的。
 
-=== "Java"
+在数组中访问元素是非常高效的，我们可以在 $O(1)$ 时间内随机访问数组中的任意一个元素。
 
-    ```java title="array.java"
-    /* 扩展数组长度 */
-    int[] extend(int[] nums, int enlarge) {
-        // 初始化一个扩展长度后的数组
-        int[] res = new int[nums.length + enlarge];
-        // 将原数组中的所有元素复制到新数组
-        for (int i = 0; i < nums.length; i++) {
-            res[i] = nums[i];
-        }
-        // 返回扩展后的新数组
-        return res;
-    }
+=== "Python"
+
+    ```python title="array.py"
+    [class]{}-[func]{random_access}
     ```
 
 === "C++"
 
     ```cpp title="array.cpp"
-    /* 扩展数组长度 */
-    int* extend(int* nums, int size, int enlarge) {
-        // 初始化一个扩展长度后的数组
-        int* res = new int[size + enlarge];
-        // 将原数组中的所有元素复制到新数组
-        for (int i = 0; i < size; i++) {
-            res[i] = nums[i];
-        }
-        // 返回扩展后的新数组
-        return res;
-    }
+    [class]{}-[func]{randomAccess}
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title="array.py"
-    """ 扩展数组长度 """
-    # 请注意，Python 的 list 是动态数组，可以直接扩展
-    # 为了方便学习，本函数将 list 看作是长度不可变的数组
-    def extend(nums, enlarge):
-        # 初始化一个扩展长度后的数组
-        res = [0] * (len(nums) + enlarge)
-        # 将原数组中的所有元素复制到新数组
-        for i in range(len(nums)):
-            res[i] = nums[i]
-        # 返回扩展后的新数组
-        return res
-    ```
-
-=== "Go"
-
-    ```go title="array.go"
-    /* 扩展数组长度 */
-    func extend(nums []int, enlarge int) []int {
-        // 初始化一个扩展长度后的数组
-        res := make([]int, len(nums)+enlarge)
-        // 将原数组中的所有元素复制到新数组
-        for i, num := range nums {
-            res[i] = num
-        }
-        // 返回扩展后的新数组
-        return res
-    }
-    ```
-
-=== "JavaScript"
-
-    ```javascript title="array.js"
-    /* 扩展数组长度 */
-    function extend(nums, enlarge) {
-        // 初始化一个扩展长度后的数组
-        const res = new Array(nums.length + enlarge).fill(0);
-        // 将原数组中的所有元素复制到新数组
-        for (let i = 0; i < nums.length; i++) {
-            res[i] = nums[i];
-        }
-        // 返回扩展后的新数组
-        return res;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="array.ts"
-    /* 扩展数组长度 */
-    function extend(nums: number[], enlarge: number): number[] {
-        // 初始化一个扩展长度后的数组
-        const res = new Array(nums.length + enlarge).fill(0);
-        // 将原数组中的所有元素复制到新数组
-        for (let i = 0; i < nums.length; i++) {
-            res[i] = nums[i];
-        }
-        // 返回扩展后的新数组
-        return res;
-    }
-    ```
-
-=== "C"
-
-    ```c title="array.c"
-    
+    ```java title="array.java"
+    [class]{array}-[func]{randomAccess}
     ```
 
 === "C#"
 
     ```csharp title="array.cs"
-    /* 扩展数组长度 */
-    int[] Extend(int[] nums, int enlarge)
-    {
-        // 初始化一个扩展长度后的数组
-        int[] res = new int[nums.Length + enlarge];
-        // 将原数组中的所有元素复制到新数组
-        for (int i = 0; i < nums.Length; i++)
-        {
-            res[i] = nums[i];
-        }
-        // 返回扩展后的新数组
-        return res;
-    }
+    [class]{array}-[func]{randomAccess}
+    ```
+
+=== "Go"
+
+    ```go title="array.go"
+    [class]{}-[func]{randomAccess}
     ```
 
 === "Swift"
 
     ```swift title="array.swift"
-    /* 扩展数组长度 */
-    func extend(nums: [Int], enlarge: Int) -> [Int] {
-        // 初始化一个扩展长度后的数组
-        var res = Array(repeating: 0, count: nums.count + enlarge)
-        // 将原数组中的所有元素复制到新数组
-        for i in nums.indices {
-            res[i] = nums[i]
-        }
-        // 返回扩展后的新数组
-        return res
-    }
+    [class]{}-[func]{randomAccess}
     ```
 
-**数组中插入或删除元素效率低下**。假设我们想要在数组中间某位置插入一个元素，由于数组元素在内存中是“紧挨着的”，它们之间没有空间再放任何数据。因此，我们不得不将此索引之后的所有元素都向后移动一位，然后再把元素赋值给该索引。删除元素也是类似，需要把此索引之后的元素都向前移动一位。总体看有以下缺点：
+=== "JS"
 
-- **时间复杂度高**：数组的插入和删除的平均时间复杂度均为 $O(N)$ ，其中 $N$ 为数组长度。
-- **丢失元素**：由于数组的长度不可变，因此在插入元素后，超出数组长度范围的元素会被丢失。
-- **内存浪费**：我们一般会初始化一个比较长的数组，只用前面一部分，这样在插入数据时，丢失的末尾元素都是我们不关心的，但这样做同时也会造成内存空间的浪费。
+    ```javascript title="array.js"
+    [class]{}-[func]{randomAccess}
+    ```
 
-![array_insert_remove_element](array.assets/array_insert_remove_element.png)
+=== "TS"
 
-<p align="center"> Fig. 在数组中插入与删除元素 </p>
+    ```typescript title="array.ts"
+    [class]{}-[func]{randomAccess}
+    ```
 
-=== "Java"
+=== "Dart"
 
-    ```java title="array.java"
-    /* 在数组的索引 index 处插入元素 num */
-    void insert(int[] nums, int num, int index) {
-        // 把索引 index 以及之后的所有元素向后移动一位
-        for (int i = nums.length - 1; i > index; i--) {
-            nums[i] = nums[i - 1];
-        }
-        // 将 num 赋给 index 处元素
-        nums[index] = num;
-    }
-    
-    /* 删除索引 index 处元素 */
-    void remove(int[] nums, int index) {
-        // 把索引 index 之后的所有元素向前移动一位
-        for (int i = index; i < nums.length - 1; i++) {
-            nums[i] = nums[i + 1];
-        }
-    }
+    ```dart title="array.dart"
+    [class]{}-[func]{randomAccess}
+    ```
+
+=== "Rust"
+
+    ```rust title="array.rs"
+    [class]{}-[func]{random_access}
+    ```
+
+=== "C"
+
+    ```c title="array.c"
+    [class]{}-[func]{randomAccess}
+    ```
+
+=== "Zig"
+
+    ```zig title="array.zig"
+    [class]{}-[func]{randomAccess}
+    ```
+
+### 插入元素
+
+数组元素在内存中是“紧挨着的”，它们之间没有空间再存放任何数据。如下图所示，如果想要在数组中间插入一个元素，则需要将该元素之后的所有元素都向后移动一位，之后再把元素赋值给该索引。
+
+![数组插入元素示例](array.assets/array_insert_element.png)
+
+值得注意的是，由于数组的长度是固定的，因此插入一个元素必定会导致数组尾部元素的“丢失”。我们将这个问题的解决方案留在列表章节中讨论。
+
+=== "Python"
+
+    ```python title="array.py"
+    [class]{}-[func]{insert}
     ```
 
 === "C++"
 
     ```cpp title="array.cpp"
-    /* 在数组的索引 index 处插入元素 num */
-    void insert(int* nums, int size, int num, int index) {
-        // 把索引 index 以及之后的所有元素向后移动一位
-        for (int i = size - 1; i > index; i--) {
-            nums[i] = nums[i - 1];
-        }
-        // 将 num 赋给 index 处元素
-        nums[index] = num;
-    }
-    
-    /* 删除索引 index 处元素 */
-    void remove(int* nums, int size, int index) {
-        // 把索引 index 之后的所有元素向前移动一位
-        for (int i = index; i < size - 1; i++) {
-            nums[i] = nums[i + 1];
-        }
-    }
+    [class]{}-[func]{insert}
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title="array.py"
-    """ 在数组的索引 index 处插入元素 num """
-    def insert(nums, num, index):
-        # 把索引 index 以及之后的所有元素向后移动一位
-        for i in range(len(nums) - 1, index, -1):
-            nums[i] = nums[i - 1]
-        # 将 num 赋给 index 处元素
-        nums[index] = num
-    
-    """ 删除索引 index 处元素 """
-    def remove(nums, index):
-        # 把索引 index 之后的所有元素向前移动一位
-        for i in range(index, len(nums) - 1):
-            nums[i] = nums[i + 1]
-    ```
-
-=== "Go"
-
-    ```go title="array.go"
-    /* 在数组的索引 index 处插入元素 num */
-    func insert(nums []int, num int, index int) {
-        // 把索引 index 以及之后的所有元素向后移动一位
-        for i := len(nums) - 1; i > index; i-- {
-            nums[i] = nums[i-1]
-        }
-        // 将 num 赋给 index 处元素
-        nums[index] = num
-    }
-
-    /* 删除索引 index 处元素 */
-    func remove(nums []int, index int) {
-        // 把索引 index 之后的所有元素向前移动一位
-        for i := index; i < len(nums)-1; i++ {
-            nums[i] = nums[i+1]
-        }
-    }
-    ```
-
-=== "JavaScript"
-
-    ```javascript title="array.js"
-    /* 在数组的索引 index 处插入元素 num */
-    function insert(nums, num, index) {
-        // 把索引 index 以及之后的所有元素向后移动一位
-        for (let i = nums.length - 1; i > index; i--) {
-            nums[i] = nums[i - 1];
-        }
-        // 将 num 赋给 index 处元素
-        nums[index] = num;
-    }
-    
-    /* 删除索引 index 处元素 */
-    function remove(nums, index) {
-        // 把索引 index 之后的所有元素向前移动一位
-        for (let i = index; i < nums.length - 1; i++) {
-            nums[i] = nums[i + 1];
-        }
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="array.ts"
-    /* 在数组的索引 index 处插入元素 num */
-    function insert(nums: number[], num: number, index: number): void {
-        // 把索引 index 以及之后的所有元素向后移动一位
-        for (let i = nums.length - 1; i > index; i--) {
-            nums[i] = nums[i - 1];
-        }
-        // 将 num 赋给 index 处元素
-        nums[index] = num;
-    }
-    
-    /* 删除索引 index 处元素 */
-    function remove(nums: number[], index: number): void {
-        // 把索引 index 之后的所有元素向前移动一位
-        for (let i = index; i < nums.length - 1; i++) {
-            nums[i] = nums[i + 1];
-        }
-    }
-    ```
-
-=== "C"
-
-    ```c title="array.c"
-    
+    ```java title="array.java"
+    [class]{array}-[func]{insert}
     ```
 
 === "C#"
 
     ```csharp title="array.cs"
-    /* 在数组的索引 index 处插入元素 num */
-    void Insert(int[] nums, int num, int index)
-    {
-        // 把索引 index 以及之后的所有元素向后移动一位
-        for (int i = nums.Length - 1; i > index; i--)
-        {
-            nums[i] = nums[i - 1];
-        }
-        // 将 num 赋给 index 处元素
-        nums[index] = num;
-    }
-    /* 删除索引 index 处元素 */
-    void Remove(int[] nums, int index)
-    {
-        // 把索引 index 之后的所有元素向前移动一位
-        for (int i = index; i < nums.Length - 1; i++)
-        {
-            nums[i] = nums[i + 1];
-        }
-    }
+    [class]{array}-[func]{insert}
+    ```
+
+=== "Go"
+
+    ```go title="array.go"
+    [class]{}-[func]{insert}
     ```
 
 === "Swift"
 
     ```swift title="array.swift"
-    /* 在数组的索引 index 处插入元素 num */
-    func insert(nums: inout [Int], num: Int, index: Int) {
-        // 把索引 index 以及之后的所有元素向后移动一位
-        for i in sequence(first: nums.count - 1, next: { $0 > index + 1 ? $0 - 1 : nil }) {
-            nums[i] = nums[i - 1]
-        }
-        // 将 num 赋给 index 处元素
-        nums[index] = num
-    }
-
-    /* 删除索引 index 处元素 */
-    func remove(nums: inout [Int], index: Int) {
-        let count = nums.count
-        // 把索引 index 之后的所有元素向前移动一位
-        for i in sequence(first: index, next: { $0 < count - 1 - 1 ? $0 + 1 : nil }) {
-            nums[i] = nums[i + 1]
-        }
-    }
+    [class]{}-[func]{insert}
     ```
 
-## 数组常用操作
+=== "JS"
 
-**数组遍历**。以下介绍两种常用的遍历方法。
+    ```javascript title="array.js"
+    [class]{}-[func]{insert}
+    ```
 
-=== "Java"
+=== "TS"
 
-    ```java title="array.java"
-    /* 遍历数组 */
-    void traverse(int[] nums) {
-        int count = 0;
-        // 通过索引遍历数组
-        for (int i = 0; i < nums.length; i++) {
-            count++;
-        }
-        // 直接遍历数组
-        for (int num : nums) {
-            count++;
-        }
-    }
+    ```typescript title="array.ts"
+    [class]{}-[func]{insert}
+    ```
+
+=== "Dart"
+
+    ```dart title="array.dart"
+    [class]{}-[func]{insert}
+    ```
+
+=== "Rust"
+
+    ```rust title="array.rs"
+    [class]{}-[func]{insert}
+    ```
+
+=== "C"
+
+    ```c title="array.c"
+    [class]{}-[func]{insert}
+    ```
+
+=== "Zig"
+
+    ```zig title="array.zig"
+    [class]{}-[func]{insert}
+    ```
+
+### 删除元素
+
+同理，如下图所示，若想要删除索引 $i$ 处的元素，则需要把索引 $i$ 之后的元素都向前移动一位。
+
+![数组删除元素示例](array.assets/array_remove_element.png)
+
+请注意，删除元素完成后，原先末尾的元素变得“无意义”了，所以我们无须特意去修改它。
+
+=== "Python"
+
+    ```python title="array.py"
+    [class]{}-[func]{remove}
     ```
 
 === "C++"
 
     ```cpp title="array.cpp"
-    /* 遍历数组 */
-    void traverse(int* nums, int size) {
-        int count = 0;
-        // 通过索引遍历数组
-        for (int i = 0; i < size; i++) {
-            count++;
-        }
-    }  
+    [class]{}-[func]{remove}
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title="array.py"
-    """ 遍历数组 """
-    def traverse(nums):
-        count = 0
-        # 通过索引遍历数组
-        for i in range(len(nums)):
-            count += 1
-        # 直接遍历数组
-        for num in nums:
-            count += 1
-    ```
-
-=== "Go"
-
-    ```go title="array.go"
-    /* 遍历数组 */
-    func traverse(nums []int) {
-        count := 0
-        // 通过索引遍历数组
-        for i := 0; i < len(nums); i++ {
-            count++
-        }
-        // 直接遍历数组
-        for range nums {
-            count++
-        }
-    }
-    ```
-
-=== "JavaScript"
-
-    ```javascript title="array.js"
-    /* 遍历数组 */
-    function traverse(nums) {
-        let count = 0;
-        // 通过索引遍历数组
-        for (let i = 0; i < nums.length; i++) {
-            count++;
-        }
-        // 直接遍历数组
-        for (let num of nums) {
-            count += 1;
-        }
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="array.ts"
-    /* 遍历数组 */
-    function traverse(nums: number[]): void {
-        let count = 0;
-        // 通过索引遍历数组
-        for (let i = 0; i < nums.length; i++) {
-            count++;
-        }
-        // 直接遍历数组
-        for(let num of nums){
-            count += 1;
-        }
-    }
-    ```
-
-=== "C"
-
-    ```c title="array.c"
-    
+    ```java title="array.java"
+    [class]{array}-[func]{remove}
     ```
 
 === "C#"
 
     ```csharp title="array.cs"
-    /* 遍历数组 */
-    void Traverse(int[] nums)
-    {
-        int count = 0;
-        // 通过索引遍历数组
-        for (int i = 0; i < nums.Length; i++)
-        {
-            count++;
-        }
-        // 直接遍历数组
-        foreach (int num in nums)
-        {
-            count++;
-        }
-    }
+    [class]{array}-[func]{remove}
+    ```
+
+=== "Go"
+
+    ```go title="array.go"
+    [class]{}-[func]{remove}
     ```
 
 === "Swift"
 
     ```swift title="array.swift"
-    /* 遍历数组 */
-    func traverse(nums: [Int]) {
-        var count = 0
-        // 通过索引遍历数组
-        for _ in nums.indices {
-            count += 1
-        }
-        // 直接遍历数组
-        for _ in nums {
-            count += 1
-        }
-    }
+    [class]{}-[func]{remove}
     ```
 
-**数组查找**。通过遍历数组，查找数组内的指定元素，并输出对应索引。
+=== "JS"
 
-=== "Java"
+    ```javascript title="array.js"
+    [class]{}-[func]{remove}
+    ```
 
-    ```java title="array.java"
-    /* 在数组中查找指定元素 */
-    int find(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == target)
-                return i;
-        }
-        return -1;
-    }
+=== "TS"
+
+    ```typescript title="array.ts"
+    [class]{}-[func]{remove}
+    ```
+
+=== "Dart"
+
+    ```dart title="array.dart"
+    [class]{}-[func]{remove}
+    ```
+
+=== "Rust"
+
+    ```rust title="array.rs"
+    [class]{}-[func]{remove}
+    ```
+
+=== "C"
+
+    ```c title="array.c"
+    [class]{}-[func]{removeItem}
+    ```
+
+=== "Zig"
+
+    ```zig title="array.zig"
+    [class]{}-[func]{remove}
+    ```
+
+总的来看，数组的插入与删除操作有以下缺点。
+
+- **时间复杂度高**：数组的插入和删除的平均时间复杂度均为 $O(n)$ ，其中 $n$ 为数组长度。
+- **丢失元素**：由于数组的长度不可变，因此在插入元素后，超出数组长度范围的元素会丢失。
+- **内存浪费**：我们可以初始化一个比较长的数组，只用前面一部分，这样在插入数据时，丢失的末尾元素都是“无意义”的，但这样做也会造成部分内存空间的浪费。
+
+### 遍历数组
+
+在大多数编程语言中，我们既可以通过索引遍历数组，也可以直接遍历获取数组中的每个元素。
+
+=== "Python"
+
+    ```python title="array.py"
+    [class]{}-[func]{traverse}
     ```
 
 === "C++"
 
     ```cpp title="array.cpp"
-    /* 在数组中查找指定元素 */
-    int find(int* nums, int size, int target) {
-        for (int i = 0; i < size; i++) {
-            if (nums[i] == target)
-                return i;
-        }
-        return -1;
-    }
+    [class]{}-[func]{traverse}
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title="array.py"
-    """ 在数组中查找指定元素 """
-    def find(nums, target):
-        for i in range(len(nums)):
-            if nums[i] == target:
-                return i
-        return -1
-    ```
-
-=== "Go"
-
-    ```go title="array.go"
-    /* 在数组中查找指定元素 */
-    func find(nums []int, target int) (index int) {
-        index = -1
-        for i := 0; i < len(nums); i++ {
-            if nums[i] == target {
-                index = i
-                break
-            }
-        }
-        return
-    }
-    ```
-
-=== "JavaScript"
-
-    ```javascript title="array.js"
-    /* 在数组中查找指定元素 */
-    function find(nums, target) {
-        for (let i = 0; i < nums.length; i++) {
-            if (nums[i] == target) return i;
-        }
-        return -1;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="array.ts"
-    /* 在数组中查找指定元素 */
-    function find(nums: number[], target: number): number {
-        for (let i = 0; i < nums.length; i++) {
-            if (nums[i] === target) {
-                return i;
-            }
-        }
-        return -1;
-    }
-    ```
-
-=== "C"
-
-    ```c title="array.c"
-    
+    ```java title="array.java"
+    [class]{array}-[func]{traverse}
     ```
 
 === "C#"
 
     ```csharp title="array.cs"
-    /* 在数组中查找指定元素 */
-    int Find(int[] nums, int target)
-    {
-        for (int i = 0; i < nums.Length; i++)
-        {
-            if (nums[i] == target)
-                return i;
-        }
-        return -1;
-    }
+    [class]{array}-[func]{traverse}
+    ```
+
+=== "Go"
+
+    ```go title="array.go"
+    [class]{}-[func]{traverse}
     ```
 
 === "Swift"
 
     ```swift title="array.swift"
-    /* 在数组中查找指定元素 */
-    func find(nums: [Int], target: Int) -> Int {
-        for i in nums.indices {
-            if nums[i] == target {
-                return i
-            }
-        }
-        return -1
-    }
+    [class]{}-[func]{traverse}
     ```
+
+=== "JS"
+
+    ```javascript title="array.js"
+    [class]{}-[func]{traverse}
+    ```
+
+=== "TS"
+
+    ```typescript title="array.ts"
+    [class]{}-[func]{traverse}
+    ```
+
+=== "Dart"
+
+    ```dart title="array.dart"
+    [class]{}-[func]{traverse}
+    ```
+
+=== "Rust"
+
+    ```rust title="array.rs"
+    [class]{}-[func]{traverse}
+    ```
+
+=== "C"
+
+    ```c title="array.c"
+    [class]{}-[func]{traverse}
+    ```
+
+=== "Zig"
+
+    ```zig title="array.zig"
+    [class]{}-[func]{traverse}
+    ```
+
+### 查找元素
+
+在数组中查找指定元素需要遍历数组，每轮判断元素值是否匹配，若匹配则输出对应索引。
+
+因为数组是线性数据结构，所以上述查找操作被称为“线性查找”。
+
+=== "Python"
+
+    ```python title="array.py"
+    [class]{}-[func]{find}
+    ```
+
+=== "C++"
+
+    ```cpp title="array.cpp"
+    [class]{}-[func]{find}
+    ```
+
+=== "Java"
+
+    ```java title="array.java"
+    [class]{array}-[func]{find}
+    ```
+
+=== "C#"
+
+    ```csharp title="array.cs"
+    [class]{array}-[func]{find}
+    ```
+
+=== "Go"
+
+    ```go title="array.go"
+    [class]{}-[func]{find}
+    ```
+
+=== "Swift"
+
+    ```swift title="array.swift"
+    [class]{}-[func]{find}
+    ```
+
+=== "JS"
+
+    ```javascript title="array.js"
+    [class]{}-[func]{find}
+    ```
+
+=== "TS"
+
+    ```typescript title="array.ts"
+    [class]{}-[func]{find}
+    ```
+
+=== "Dart"
+
+    ```dart title="array.dart"
+    [class]{}-[func]{find}
+    ```
+
+=== "Rust"
+
+    ```rust title="array.rs"
+    [class]{}-[func]{find}
+    ```
+
+=== "C"
+
+    ```c title="array.c"
+    [class]{}-[func]{find}
+    ```
+
+=== "Zig"
+
+    ```zig title="array.zig"
+    [class]{}-[func]{find}
+    ```
+
+### 扩容数组
+
+在复杂的系统环境中，程序难以保证数组之后的内存空间是可用的，从而无法安全地扩展数组容量。因此在大多数编程语言中，**数组的长度是不可变的**。
+
+如果我们希望扩容数组，则需重新建立一个更大的数组，然后把原数组元素依次拷贝到新数组。这是一个 $O(n)$ 的操作，在数组很大的情况下是非常耗时的。
+
+=== "Python"
+
+    ```python title="array.py"
+    [class]{}-[func]{extend}
+    ```
+
+=== "C++"
+
+    ```cpp title="array.cpp"
+    [class]{}-[func]{extend}
+    ```
+
+=== "Java"
+
+    ```java title="array.java"
+    [class]{array}-[func]{extend}
+    ```
+
+=== "C#"
+
+    ```csharp title="array.cs"
+    [class]{array}-[func]{extend}
+    ```
+
+=== "Go"
+
+    ```go title="array.go"
+    [class]{}-[func]{extend}
+    ```
+
+=== "Swift"
+
+    ```swift title="array.swift"
+    [class]{}-[func]{extend}
+    ```
+
+=== "JS"
+
+    ```javascript title="array.js"
+    [class]{}-[func]{extend}
+    ```
+
+=== "TS"
+
+    ```typescript title="array.ts"
+    [class]{}-[func]{extend}
+    ```
+
+=== "Dart"
+
+    ```dart title="array.dart"
+    [class]{}-[func]{extend}
+    ```
+
+=== "Rust"
+
+    ```rust title="array.rs"
+    [class]{}-[func]{extend}
+    ```
+
+=== "C"
+
+    ```c title="array.c"
+    [class]{}-[func]{extend}
+    ```
+
+=== "Zig"
+
+    ```zig title="array.zig"
+    [class]{}-[func]{extend}
+    ```
+
+## 数组优点与局限性
+
+数组存储在连续的内存空间内，且元素类型相同。这种做法包含丰富的先验信息，系统可以利用这些信息来优化数据结构的操作效率。
+
+- **空间效率高**: 数组为数据分配了连续的内存块，无须额外的结构开销。
+- **支持随机访问**: 数组允许在 $O(1)$ 时间内访问任何元素。
+- **缓存局部性**: 当访问数组元素时，计算机不仅会加载它，还会缓存其周围的其他数据，从而借助高速缓存来提升后续操作的执行速度。
+
+连续空间存储是一把双刃剑，其存在以下缺点。
+
+- **插入与删除效率低**:当数组中元素较多时，插入与删除操作需要移动大量的元素。
+- **长度不可变**: 数组在初始化后长度就固定了，扩容数组需要将所有数据复制到新数组，开销很大。
+- **空间浪费**: 如果数组分配的大小超过了实际所需，那么多余的空间就被浪费了。
 
 ## 数组典型应用
 
-**随机访问**。如果我们想要随机抽取一些样本，那么可以用数组存储，并生成一个随机序列，根据索引实现样本的随机抽取。
+数组是一种基础且常见的数据结构，既频繁应用在各类算法之中，也可用于实现各种复杂数据结构。
 
-**二分查找**。例如前文查字典的例子，我们可以将字典中的所有字按照拼音顺序存储在数组中，然后使用与日常查纸质字典相同的“翻开中间，排除一半”的方式，来实现一个查电子字典的算法。
-
-**深度学习**。神经网络中大量使用了向量、矩阵、张量之间的线性代数运算，这些数据都是以数组的形式构建的。数组是神经网络编程中最常使用的数据结构。
+- **随机访问**：如果我们想要随机抽取一些样本，那么可以用数组存储，并生成一个随机序列，根据索引实现样本的随机抽取。
+- **排序和搜索**：数组是排序和搜索算法最常用的数据结构。快速排序、归并排序、二分查找等都主要在数组上进行。
+- **查找表**：当我们需要快速查找一个元素或者需要查找一个元素的对应关系时，可以使用数组作为查找表。假如我们想要实现字符到 ASCII 码的映射，则可以将字符的 ASCII 码值作为索引，对应的元素存放在数组中的对应位置。
+- **机器学习**：神经网络中大量使用了向量、矩阵、张量之间的线性代数运算，这些数据都是以数组的形式构建的。数组是神经网络编程中最常使用的数据结构。
+- **数据结构实现**：数组可以用于实现栈、队列、哈希表、堆、图等数据结构。例如，图的邻接矩阵表示实际上是一个二维数组。

@@ -1,460 +1,273 @@
----
-comments: true
----
-
 # 二叉树遍历
 
-非线性数据结构的遍历操作比线性数据结构更加复杂，往往需要使用搜索算法来实现。常见的二叉树遍历方式有层序遍历、前序遍历、中序遍历、后序遍历。
+从物理结构的角度来看，树是一种基于链表的数据结构，因此其遍历方式是通过指针逐个访问节点。然而，树是一种非线性数据结构，这使得遍历树比遍历链表更加复杂，需要借助搜索算法来实现。
+
+二叉树常见的遍历方式包括层序遍历、前序遍历、中序遍历和后序遍历等。
 
 ## 层序遍历
 
-「层序遍历 Hierarchical-Order Traversal」从顶至底、一层一层地遍历二叉树，并在每层中按照从左到右的顺序访问结点。
+如下图所示，「层序遍历 level-order traversal」从顶部到底部逐层遍历二叉树，并在每一层按照从左到右的顺序访问节点。
 
-层序遍历本质上是「广度优先搜索 Breadth-First Traversal」，其体现着一种“一圈一圈向外”的层进遍历方式。
+层序遍历本质上属于「广度优先遍历 breadth-first traversal」，它体现了一种“一圈一圈向外扩展”的逐层遍历方式。
 
-![binary_tree_bfs](binary_tree_traversal.assets/binary_tree_bfs.png)
+![二叉树的层序遍历](binary_tree_traversal.assets/binary_tree_bfs.png)
 
-<p align="center"> Fig. 二叉树的层序遍历 </p>
+### 代码实现
 
-广度优先遍历一般借助「队列」来实现。队列的规则是“先进先出”，广度优先遍历的规则是 ”一层层平推“ ，两者背后的思想是一致的。
+广度优先遍历通常借助“队列”来实现。队列遵循“先进先出”的规则，而广度优先遍历则遵循“逐层推进”的规则，两者背后的思想是一致的。
 
-=== "Java"
+=== "Python"
 
-    ```java title="binary_tree_bfs.java"
-    /* 层序遍历 */
-    List<Integer> hierOrder(TreeNode root) {
-        // 初始化队列，加入根结点
-        Queue<TreeNode> queue = new LinkedList<>() {{ add(root); }};
-        // 初始化一个列表，用于保存遍历序列
-        List<Integer> list = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            TreeNode node = queue.poll();  // 队列出队
-            list.add(node.val);            // 保存结点值
-            if (node.left != null)
-                queue.offer(node.left);    // 左子结点入队
-            if (node.right != null)
-                queue.offer(node.right);   // 右子结点入队
-        }
-        return list;
-    }
+    ```python title="binary_tree_bfs.py"
+    [class]{}-[func]{level_order}
     ```
 
 === "C++"
 
     ```cpp title="binary_tree_bfs.cpp"
-    /* 层序遍历 */
-    vector<int> hierOrder(TreeNode* root) {
-        // 初始化队列，加入根结点
-        queue<TreeNode*> queue;
-        queue.push(root);
-        // 初始化一个列表，用于保存遍历序列
-        vector<int> vec;
-        while (!queue.empty()) {
-            TreeNode* node = queue.front();
-            queue.pop();                 // 队列出队
-            vec.push_back(node->val);    // 保存结点
-            if (node->left != nullptr)
-                queue.push(node->left);  // 左子结点入队
-            if (node->right != nullptr)
-                queue.push(node->right); // 右子结点入队
-        }
-        return vec;
-    }
+    [class]{}-[func]{levelOrder}
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title="binary_tree_bfs.py"
-    """ 层序遍历 """
-    def hier_order(root: Optional[TreeNode]):
-        # 初始化队列，加入根结点
-        queue = collections.deque()
-        queue.append(root)
-        # 初始化一个列表，用于保存遍历序列
-        res = []
-        while queue:
-            node = queue.popleft()       # 队列出队
-            res.append(node.val)         # 保存节点值
-            if node.left is not None:
-                queue.append(node.left)  # 左子结点入队
-            if node.right is not None:
-                queue.append(node.right) # 右子结点入队
-        return res
-    ```
-
-=== "Go"
-
-    ```go title="binary_tree_bfs.go"
-    /* 层序遍历 */
-    func levelOrder(root *TreeNode) []int {
-        // 初始化队列，加入根结点
-        queue := list.New()
-        queue.PushBack(root)
-        // 初始化一个切片，用于保存遍历序列
-        nums := make([]int, 0)
-        for queue.Len() > 0 {
-            // poll
-            node := queue.Remove(queue.Front()).(*TreeNode)
-            // 保存结点
-            nums = append(nums, node.Val)
-            if node.Left != nil {
-                // 左子结点入队
-                queue.PushBack(node.Left)
-            }
-            if node.Right != nil {
-                // 右子结点入队
-                queue.PushBack(node.Right)
-            }
-        }
-        return nums
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="binary_tree_bfs.js"
-    /* 层序遍历 */
-    function hierOrder(root) {
-        // 初始化队列，加入根结点
-        let queue = [root];
-        // 初始化一个列表，用于保存遍历序列
-        let list = [];
-        while (queue.length) {
-            let node = queue.shift();  // 队列出队
-            list.push(node.val);          // 保存结点
-            if (node.left)
-                queue.push(node.left);    // 左子结点入队
-            if (node.right)
-                queue.push(node.right);   // 右子结点入队
-        }
-        return list;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="binary_tree_bfs.ts"
-    /* 层序遍历 */
-    function hierOrder(root: TreeNode | null): number[] {
-        // 初始化队列，加入根结点
-        const queue = [root];
-        // 初始化一个列表，用于保存遍历序列
-        const list: number[] = [];
-        while (queue.length) {
-            let node = queue.shift() as TreeNode; // 队列出队
-            list.push(node.val); // 保存结点
-            if (node.left) {
-                queue.push(node.left); // 左子结点入队
-            }
-            if (node.right) {
-                queue.push(node.right); // 右子结点入队
-            }
-        }
-        return list;
-    }
-    ```
-
-=== "C"
-
-    ```c title="binary_tree_bfs.c"
-    
+    ```java title="binary_tree_bfs.java"
+    [class]{binary_tree_bfs}-[func]{levelOrder}
     ```
 
 === "C#"
 
     ```csharp title="binary_tree_bfs.cs"
-    /* 层序遍历 */
-    public List<int?> hierOrder(TreeNode root)
-    {
-        // 初始化队列，加入根结点
-        Queue<TreeNode> queue = new();
-        queue.Enqueue(root);
-        // 初始化一个列表，用于保存遍历序列
-        List<int> list = new();
-        while (queue.Count != 0)
-        {
-            TreeNode node = queue.Dequeue(); // 队列出队
-            list.Add(node.val);              // 保存结点值
-            if (node.left != null)
-                queue.Enqueue(node.left);    // 左子结点入队
-            if (node.right != null)
-                queue.Enqueue(node.right);   // 右子结点入队
-        }
-        return list;
-    }
-    
+    [class]{binary_tree_bfs}-[func]{levelOrder}
+    ```
+
+=== "Go"
+
+    ```go title="binary_tree_bfs.go"
+    [class]{}-[func]{levelOrder}
     ```
 
 === "Swift"
 
     ```swift title="binary_tree_bfs.swift"
-
+    [class]{}-[func]{levelOrder}
     ```
+
+=== "JS"
+
+    ```javascript title="binary_tree_bfs.js"
+    [class]{}-[func]{levelOrder}
+    ```
+
+=== "TS"
+
+    ```typescript title="binary_tree_bfs.ts"
+    [class]{}-[func]{levelOrder}
+    ```
+
+=== "Dart"
+
+    ```dart title="binary_tree_bfs.dart"
+    [class]{}-[func]{levelOrder}
+    ```
+
+=== "Rust"
+
+    ```rust title="binary_tree_bfs.rs"
+    [class]{}-[func]{level_order}
+    ```
+
+=== "C"
+
+    ```c title="binary_tree_bfs.c"
+    [class]{}-[func]{levelOrder}
+    ```
+
+=== "Zig"
+
+    ```zig title="binary_tree_bfs.zig"
+    [class]{}-[func]{levelOrder}
+    ```
+
+### 复杂度分析
+
+- **时间复杂度 $O(n)$** ：所有节点被访问一次，使用 $O(n)$ 时间，其中 $n$ 为节点数量。
+- **空间复杂度 $O(n)$** ：在最差情况下，即满二叉树时，遍历到最底层之前，队列中最多同时存在 $(n + 1) / 2$ 个节点，占用 $O(n)$ 空间。
 
 ## 前序、中序、后序遍历
 
-相对地，前、中、后序遍历皆属于「深度优先遍历 Depth-First Traversal」，其体现着一种“先走到尽头，再回头继续”的回溯遍历方式。
+相应地，前序、中序和后序遍历都属于「深度优先遍历 depth-first traversal」，它体现了一种“先走到尽头，再回溯继续”的遍历方式。
 
-如下图所示，左侧是深度优先遍历的的示意图，右上方是对应的递归实现代码。深度优先遍历就像是绕着整个二叉树的外围“走”一圈，走的过程中，在每个结点都会遇到三个位置，分别对应前序遍历、中序遍历、后序遍历。
+下图展示了对二叉树进行深度优先遍历的工作原理。**深度优先遍历就像是绕着整个二叉树的外围“走”一圈**，在每个节点都会遇到三个位置，分别对应前序遍历、中序遍历和后序遍历。
 
-![binary_tree_dfs](binary_tree_traversal.assets/binary_tree_dfs.png)
+![二叉搜索树的前、中、后序遍历](binary_tree_traversal.assets/binary_tree_dfs.png)
 
-<p align="center"> Fig. 二叉树的前 / 中 / 后序遍历 </p>
+### 代码实现
 
-<div class="center-table" markdown>
+深度优先搜索通常基于递归实现：
 
-| 位置       | 含义                                 | 此处访问结点时对应            |
-| ---------- | ------------------------------------ | ----------------------------- |
-| 橙色圆圈处 | 刚进入此结点，即将访问该结点的左子树 | 前序遍历 Pre-Order Traversal  |
-| 蓝色圆圈处 | 已访问完左子树，即将访问右子树       | 中序遍历 In-Order Traversal   |
-| 紫色圆圈处 | 已访问完左子树和右子树，即将返回     | 后序遍历 Post-Order Traversal |
+=== "Python"
 
-</div>
+    ```python title="binary_tree_dfs.py"
+    [class]{}-[func]{pre_order}
 
-=== "Java"
+    [class]{}-[func]{in_order}
 
-    ```java title="binary_tree_dfs.java"
-    /* 前序遍历 */
-    void preOrder(TreeNode root) {
-        if (root == null) return;
-        // 访问优先级：根结点 -> 左子树 -> 右子树
-        list.add(root.val);
-        preOrder(root.left);
-        preOrder(root.right);
-    }
-    
-    /* 中序遍历 */
-    void inOrder(TreeNode root) {
-        if (root == null) return;
-        // 访问优先级：左子树 -> 根结点 -> 右子树
-        inOrder(root.left);
-        list.add(root.val);
-        inOrder(root.right);
-    }
-    
-    /* 后序遍历 */
-    void postOrder(TreeNode root) {
-        if (root == null) return;
-        // 访问优先级：左子树 -> 右子树 -> 根结点
-        postOrder(root.left);
-        postOrder(root.right);
-        list.add(root.val);
-    }
+    [class]{}-[func]{post_order}
     ```
 
 === "C++"
 
     ```cpp title="binary_tree_dfs.cpp"
-    /* 前序遍历 */
-    void preOrder(TreeNode* root) {
-        if (root == nullptr) return;
-        // 访问优先级：根结点 -> 左子树 -> 右子树
-        vec.push_back(root->val);
-        preOrder(root->left);
-        preOrder(root->right);
-    }
-    
-    /* 中序遍历 */
-    void inOrder(TreeNode* root) {
-        if (root == nullptr) return;
-        // 访问优先级：左子树 -> 根结点 -> 右子树
-        inOrder(root->left);
-        vec.push_back(root->val);
-        inOrder(root->right);
-    }
-    
-    /* 后序遍历 */
-    void postOrder(TreeNode* root) {
-        if (root == nullptr) return;
-        // 访问优先级：左子树 -> 右子树 -> 根结点
-        postOrder(root->left);
-        postOrder(root->right);
-        vec.push_back(root->val);
-    }
+    [class]{}-[func]{preOrder}
+
+    [class]{}-[func]{inOrder}
+
+    [class]{}-[func]{postOrder}
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title="binary_tree_dfs.py"
-    """ 前序遍历 """
-    def pre_order(root: Optional[TreeNode]):
-        if root is None:
-            return
-        # 访问优先级：根结点 -> 左子树 -> 右子树
-        res.append(root.val)
-        pre_order(root=root.left)
-        pre_order(root=root.right)
+    ```java title="binary_tree_dfs.java"
+    [class]{binary_tree_dfs}-[func]{preOrder}
 
-    """ 中序遍历 """
-    def in_order(root: Optional[TreeNode]):
-        if root is None:
-            return
-        # 访问优先级：左子树 -> 根结点 -> 右子树
-        in_order(root=root.left)
-        res.append(root.val)
-        in_order(root=root.right)
+    [class]{binary_tree_dfs}-[func]{inOrder}
 
-    """ 后序遍历 """
-    def post_order(root: Optional[TreeNode]):
-        if root is None:
-            return
-        # 访问优先级：左子树 -> 右子树 -> 根结点
-        post_order(root=root.left)
-        post_order(root=root.right)
-        res.append(root.val)
-    ```
-
-=== "Go"
-
-    ```go title="binary_tree_dfs.go"
-    /* 前序遍历 */
-    func preOrder(node *TreeNode) {
-        if node == nil {
-            return
-        }
-        // 访问优先级：根结点 -> 左子树 -> 右子树
-        nums = append(nums, node.Val)
-        preOrder(node.Left)
-        preOrder(node.Right)
-    }
-    
-    /* 中序遍历 */
-    func inOrder(node *TreeNode) {
-        if node == nil {
-            return
-        }
-        // 访问优先级：左子树 -> 根结点 -> 右子树
-        inOrder(node.Left)
-        nums = append(nums, node.Val)
-        inOrder(node.Right)
-    }
-    
-    /* 后序遍历 */
-    func postOrder(node *TreeNode) {
-        if node == nil {
-            return
-        }
-        // 访问优先级：左子树 -> 右子树 -> 根结点
-        postOrder(node.Left)
-        postOrder(node.Right)
-        nums = append(nums, node.Val)
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="binary_tree_dfs.js"
-    /* 前序遍历 */
-    function preOrder(root){
-        if (root === null) return;
-        // 访问优先级：根结点 -> 左子树 -> 右子树
-        list.push(root.val);
-        preOrder(root.left);
-        preOrder(root.right);
-    }
-    
-    /* 中序遍历 */
-    function inOrder(root) {
-        if (root === null) return;
-        // 访问优先级：左子树 -> 根结点 -> 右子树
-        inOrder(root.left);
-        list.push(root.val);
-        inOrder(root.right);
-    }
-    
-    /* 后序遍历 */
-    function postOrder(root) {
-        if (root === null) return;
-        // 访问优先级：左子树 -> 右子树 -> 根结点
-        postOrder(root.left);
-        postOrder(root.right);
-        list.push(root.val);
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="binary_tree_dfs.ts"
-    /* 前序遍历 */
-    function preOrder(root: TreeNode | null): void {
-        if (root === null) {
-            return;
-        }
-        // 访问优先级：根结点 -> 左子树 -> 右子树
-        list.push(root.val);
-        preOrder(root.left);
-        preOrder(root.right);
-    }
-    
-    /* 中序遍历 */
-    function inOrder(root: TreeNode | null): void {
-        if (root === null) {
-            return;
-        }
-        // 访问优先级：左子树 -> 根结点 -> 右子树
-        inOrder(root.left);
-        list.push(root.val);
-        inOrder(root.right);
-    }
-    
-    /* 后序遍历 */
-    function postOrder(root: TreeNode | null): void {
-        if (root === null) {
-            return;
-        }
-        // 访问优先级：左子树 -> 右子树 -> 根结点
-        postOrder(root.left);
-        postOrder(root.right);
-        list.push(root.val);
-    }
-    ```
-
-=== "C"
-
-    ```c title="binary_tree_dfs.c"
-    
+    [class]{binary_tree_dfs}-[func]{postOrder}
     ```
 
 === "C#"
 
     ```csharp title="binary_tree_dfs.cs"
-    /* 前序遍历 */
-    void preOrder(TreeNode? root)
-    {
-        if (root == null) return;
-        // 访问优先级：根结点 -> 左子树 -> 右子树
-        list.Add(root.val);
-        preOrder(root.left);
-        preOrder(root.right);
-    }
+    [class]{binary_tree_dfs}-[func]{preOrder}
 
-    /* 中序遍历 */
-    void inOrder(TreeNode? root)
-    {
-        if (root == null) return;
-        // 访问优先级：左子树 -> 根结点 -> 右子树
-        inOrder(root.left);
-        list.Add(root.val);
-        inOrder(root.right);
-    }
+    [class]{binary_tree_dfs}-[func]{inOrder}
 
-    /* 后序遍历 */
-    void postOrder(TreeNode? root)
-    {
-        if (root == null) return;
-        // 访问优先级：左子树 -> 右子树 -> 根结点
-        postOrder(root.left);
-        postOrder(root.right);
-        list.Add(root.val);
-    }
+    [class]{binary_tree_dfs}-[func]{postOrder}
+    ```
+
+=== "Go"
+
+    ```go title="binary_tree_dfs.go"
+    [class]{}-[func]{preOrder}
+
+    [class]{}-[func]{inOrder}
+
+    [class]{}-[func]{postOrder}
     ```
 
 === "Swift"
 
     ```swift title="binary_tree_dfs.swift"
+    [class]{}-[func]{preOrder}
 
+    [class]{}-[func]{inOrder}
+
+    [class]{}-[func]{postOrder}
+    ```
+
+=== "JS"
+
+    ```javascript title="binary_tree_dfs.js"
+    [class]{}-[func]{preOrder}
+
+    [class]{}-[func]{inOrder}
+
+    [class]{}-[func]{postOrder}
+    ```
+
+=== "TS"
+
+    ```typescript title="binary_tree_dfs.ts"
+    [class]{}-[func]{preOrder}
+
+    [class]{}-[func]{inOrder}
+
+    [class]{}-[func]{postOrder}
+    ```
+
+=== "Dart"
+
+    ```dart title="binary_tree_dfs.dart"
+    [class]{}-[func]{preOrder}
+
+    [class]{}-[func]{inOrder}
+
+    [class]{}-[func]{postOrder}
+    ```
+
+=== "Rust"
+
+    ```rust title="binary_tree_dfs.rs"
+    [class]{}-[func]{pre_order}
+
+    [class]{}-[func]{in_order}
+
+    [class]{}-[func]{post_order}
+    ```
+
+=== "C"
+
+    ```c title="binary_tree_dfs.c"
+    [class]{}-[func]{preOrder}
+
+    [class]{}-[func]{inOrder}
+
+    [class]{}-[func]{postOrder}
+    ```
+
+=== "Zig"
+
+    ```zig title="binary_tree_dfs.zig"
+    [class]{}-[func]{preOrder}
+
+    [class]{}-[func]{inOrder}
+
+    [class]{}-[func]{postOrder}
     ```
 
 !!! note
 
-    使用循环一样可以实现前、中、后序遍历，但代码相对繁琐，有兴趣的同学可以自行实现。
+    深度优先搜索也可以基于迭代实现，有兴趣的同学可以自行研究。
+
+下图展示了前序遍历二叉树的递归过程，其可分为“递”和“归”两个逆向的部分。
+
+1. “递”表示开启新方法，程序在此过程中访问下一个节点。
+2. “归”表示函数返回，代表当前节点已经访问完毕。
+
+=== "<1>"
+    ![前序遍历的递归过程](binary_tree_traversal.assets/preorder_step1.png)
+
+=== "<2>"
+    ![preorder_step2](binary_tree_traversal.assets/preorder_step2.png)
+
+=== "<3>"
+    ![preorder_step3](binary_tree_traversal.assets/preorder_step3.png)
+
+=== "<4>"
+    ![preorder_step4](binary_tree_traversal.assets/preorder_step4.png)
+
+=== "<5>"
+    ![preorder_step5](binary_tree_traversal.assets/preorder_step5.png)
+
+=== "<6>"
+    ![preorder_step6](binary_tree_traversal.assets/preorder_step6.png)
+
+=== "<7>"
+    ![preorder_step7](binary_tree_traversal.assets/preorder_step7.png)
+
+=== "<8>"
+    ![preorder_step8](binary_tree_traversal.assets/preorder_step8.png)
+
+=== "<9>"
+    ![preorder_step9](binary_tree_traversal.assets/preorder_step9.png)
+
+=== "<10>"
+    ![preorder_step10](binary_tree_traversal.assets/preorder_step10.png)
+
+=== "<11>"
+    ![preorder_step11](binary_tree_traversal.assets/preorder_step11.png)
+
+### 复杂度分析
+
+- **时间复杂度 $O(n)$** ：所有节点被访问一次，使用 $O(n)$ 时间。
+- **空间复杂度 $O(n)$** ：在最差情况下，即树退化为链表时，递归深度达到 $n$ ，系统占用 $O(n)$ 栈帧空间。
