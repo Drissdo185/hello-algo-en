@@ -4,7 +4,7 @@
 * Author: hpstory (hpstory1024@163.com)
 */
 
-namespace hello_algo.chapter_sorting; 
+namespace hello_algo.chapter_sorting;
 
 public class heap_sort {
     /* 堆的长度为 n ，从节点 i 开始，从顶至底堆化 */
@@ -18,7 +18,7 @@ public class heap_sort {
                 ma = l;
             if (r < n && nums[r] > nums[ma])
                 ma = r;
-            // 若节点 i 最大或索引 l, r 越界，则无需继续堆化，跳出
+            // 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
             if (ma == i)
                 break;
             // 交换两节点

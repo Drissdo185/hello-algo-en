@@ -4,13 +4,13 @@
 * Author: hpstory (hpstory1024@163.com)
 */
 
-namespace hello_algo.chapter_dynamic_programming; 
+namespace hello_algo.chapter_dynamic_programming;
 
 public class min_path_sum {
     /* 最小路径和：暴力搜索 */
     public int minPathSumDFS(int[][] grid, int i, int j) {
         // 若为左上角单元格，则终止搜索
-        if (i == 0 && j == 0){
+        if (i == 0 && j == 0) {
             return grid[0][0];
         }
         // 若行列索引越界，则返回 +∞ 代价
@@ -69,7 +69,7 @@ public class min_path_sum {
         return dp[n - 1, m - 1];
     }
 
-    /* 最小路径和：状态压缩后的动态规划 */
+    /* 最小路径和：空间优化后的动态规划 */
     public int minPathSumDPComp(int[][] grid) {
         int n = grid.Length, m = grid[0].Length;
         // 初始化 dp 表
@@ -120,7 +120,7 @@ public class min_path_sum {
         res = minPathSumDP(grid);
         Console.WriteLine("从左上角到右下角的做小路径和为 " + res);
 
-        // 状态压缩后的动态规划
+        // 空间优化后的动态规划
         res = minPathSumDPComp(grid);
         Console.WriteLine("从左上角到右下角的做小路径和为 " + res);
     }

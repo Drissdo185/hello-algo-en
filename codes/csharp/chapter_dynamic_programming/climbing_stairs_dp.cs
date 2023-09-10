@@ -4,7 +4,7 @@
 * Author: hpstory (hpstory1024@163.com)
 */
 
-namespace hello_algo.chapter_dynamic_programming; 
+namespace hello_algo.chapter_dynamic_programming;
 
 public class climbing_stairs_dp {
     /* 爬楼梯：动态规划 */
@@ -23,7 +23,7 @@ public class climbing_stairs_dp {
         return dp[n];
     }
 
-    /* 爬楼梯：状态压缩后的动态规划 */
+    /* 爬楼梯：空间优化后的动态规划 */
     public int climbingStairsDPComp(int n) {
         if (n == 1 || n == 2)
             return n;
